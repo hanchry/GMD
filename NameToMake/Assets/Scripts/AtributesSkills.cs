@@ -51,35 +51,27 @@ public class AtributesSkills : MonoBehaviour
     }
     
     private string Hp = "HpValue";
+    private string Stamina = "StaminaValue";
+    
     private string HeavyAttack = "HeavyAttackValue";
     private string HeavyDefense = "HeavyDefenseValue";
+    
+    private string LightAttack = "LightAttackValue";
+    private string LightDefense = "LightDefenseValue";
+    
+    private string Dodge = "DodgeValue";
     private string Block = "BlockValue";
     
     private void HoverConstitution()
     {
-        //make color 59A45F
-        Color color = new Color(0.3490196f, 0.6392157f, 0.372549f);
-        GameObject hpObject = GameObject.Find(Hp);
-        hpObject.GetComponent<TextMeshProUGUI>().color = color;
-        hpObject.GetComponent<TextMeshProUGUI>().text = (HpValue + 1).ToString();
+        showChange(Hp, (int)HpValue,  1, "");
     }
     private void HoverStrength()
     {
-        //make color 59A45F
-        Color color = new Color(0.3490196f, 0.6392157f, 0.372549f);
-        GameObject hpObject = GameObject.Find(Hp);
-        GameObject heavyAttackObject = GameObject.Find(HeavyAttack);
-        GameObject heavyDefenseObject = GameObject.Find(HeavyDefense);
-        GameObject blockObject = GameObject.Find(Block);
-        
-        hpObject.GetComponent<TextMeshProUGUI>().color = color;
-        heavyAttackObject.GetComponent<TextMeshProUGUI>().color = color;
-        heavyDefenseObject.GetComponent<TextMeshProUGUI>().color = color;
-        blockObject.GetComponent<TextMeshProUGUI>().color = color;
-        hpObject.GetComponent<TextMeshProUGUI>().text = (HpValue + 0.1).ToString();
-        heavyAttackObject.GetComponent<TextMeshProUGUI>().text = (HeavyAttackValue + 1).ToString();
-        heavyDefenseObject.GetComponent<TextMeshProUGUI>().text = (HeavyDefenseValue + 1).ToString();
-        blockObject.GetComponent<TextMeshProUGUI>().text = (BlockValue + 0.1).ToString() + "%";
+        showChange(Hp, HpValue,  0.1f, "");
+        showChange(HeavyAttack, HeavyAttackValue,  1, "");
+        showChange(HeavyDefense, HeavyDefenseValue,  1, "");
+        showChange(Block, BlockValue,  1, "%");
     }
     
     
@@ -87,24 +79,31 @@ public class AtributesSkills : MonoBehaviour
     
     private void HoverExitConstitution()
     {
-        GameObject hpObject = GameObject.Find(Hp);
-        hpObject.GetComponent<TextMeshProUGUI>().color = Color.white;
-        hpObject.GetComponent<TextMeshProUGUI>().text = HpValue.ToString();
+        showChange(Hp, HpValue,  0, "");
     }
     private void HoverExitStrength()
     {
-        GameObject hpObject = GameObject.Find(Hp);
-        GameObject heavyAttackObject = GameObject.Find(HeavyAttack);
-        GameObject heavyDefenseObject = GameObject.Find(HeavyDefense);
-        GameObject blockObject = GameObject.Find(Block);
+        showChange(Hp, HpValue,  0, "");
+        showChange(HeavyAttack, HeavyAttackValue,  0, "");
+        showChange(HeavyDefense, HeavyDefenseValue,  0, "");
+        showChange(Block, BlockValue,  0, "%");
+    }
+
+    private void showChange(string name, float originalValue, float value, string symbol)
+    {
+        GameObject changeObject = GameObject.Find(name);
+        Color showColor;
+
+        if (value > 0)
+        {
+            showColor = new Color(0.3490196f, 0.6392157f, 0.372549f);
+        }
+        else
+        {
+            showColor = Color.white;
+        }
         
-        hpObject.GetComponent<TextMeshProUGUI>().color = Color.white;
-        heavyAttackObject.GetComponent<TextMeshProUGUI>().color = Color.white;
-        heavyDefenseObject.GetComponent<TextMeshProUGUI>().color = Color.white;
-        blockObject.GetComponent<TextMeshProUGUI>().color = Color.white;
-        hpObject.GetComponent<TextMeshProUGUI>().text = HpValue.ToString();
-        heavyAttackObject.GetComponent<TextMeshProUGUI>().text = HeavyAttackValue.ToString();
-        heavyDefenseObject.GetComponent<TextMeshProUGUI>().text = HeavyDefenseValue.ToString();
-        blockObject.GetComponent<TextMeshProUGUI>().text = BlockValue.ToString() + "%";
+        changeObject.GetComponent<TextMeshProUGUI>().color = showColor;
+        changeObject.GetComponent<TextMeshProUGUI>().text = (originalValue + value).ToString() + symbol;
     }
 }
