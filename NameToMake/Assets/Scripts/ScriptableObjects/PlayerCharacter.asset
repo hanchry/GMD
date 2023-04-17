@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200e5064c92b4a5b99f08d542399fbdc, type: 3}
+  m_Name: PlayerCharacter
+  m_EditorClassIdentifier: 
+  skills: {fileID: 11400000, guid: d0225ee5f24a3c345973c8dc5354e8c2, type: 2}
+  name: Hanchry
+  xp: 1

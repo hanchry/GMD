@@ -1,109 +1,166 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
+using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-public class AtributesSkills : MonoBehaviour
+namespace DefaultNamespace
 {
-    
-    private float HpValue = 1200.0f;
-    private float HeavyAttackValue = 12.0f;
-    private float HeavyDefenseValue = 12.0f;
-    private float BlockValue = 5.0f;
+    public class AtributesSkills:MonoBehaviour
+    {
 
-    public void OnHoverTrigger(string name)
-    {
-        switch (name)
-        {
-            case "Constitution":
-                this.HoverConstitution();
-                break;
-            case "Strength":
-                this.HoverStrength();
-                break;
-        }
-    }
-    
-    public void OnHoverExitTrigger(string name)
-    {
-        switch (name)
-        {
-            case "Constitution":
-                this.HoverExitConstitution();
-                break;
-            case "Strength":
-                this.HoverExitStrength();
-                break;
-        }
-    }
-    
-    
-    // Start is called before the first frame update
-    void Start()
-    {
+        [SerializeField] private Character character;
+        private List<String> ConstiutionAttributes;
+        private List<String> StrengthAttrubutes;
+        private List<String> DexterityAttributes;
+        private List<String> LuckAttributes;
         
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
-    private string Hp = "HpValue";
-    private string Stamina = "StaminaValue";
-    
-    private string HeavyAttack = "HeavyAttackValue";
-    private string HeavyDefense = "HeavyDefenseValue";
-    
-    private string LightAttack = "LightAttackValue";
-    private string LightDefense = "LightDefenseValue";
-    
-    private string Dodge = "DodgeValue";
-    private string Block = "BlockValue";
-    
-    private void HoverConstitution()
-    {
-        showChange(Hp, (int)HpValue,  1, "");
-    }
-    private void HoverStrength()
-    {
-        showChange(Hp, HpValue,  0.1f, "");
-        showChange(HeavyAttack, HeavyAttackValue,  1, "");
-        showChange(HeavyDefense, HeavyDefenseValue,  1, "");
-        showChange(Block, BlockValue,  1, "%");
-    }
-    
-    
-    
-    
-    private void HoverExitConstitution()
-    {
-        showChange(Hp, HpValue,  0, "");
-    }
-    private void HoverExitStrength()
-    {
-        showChange(Hp, HpValue,  0, "");
-        showChange(HeavyAttack, HeavyAttackValue,  0, "");
-        showChange(HeavyDefense, HeavyDefenseValue,  0, "");
-        showChange(Block, BlockValue,  0, "%");
-    }
-
-    private void showChange(string name, float originalValue, float value, string symbol)
-    {
-        GameObject changeObject = GameObject.Find(name);
-        Color showColor;
-
-        if (value > 0)
+        void Start()
         {
-            showColor = new Color(0.3490196f, 0.6392157f, 0.372549f);
-        }
-        else
-        {
-            showColor = Color.white;
+            ConstiutionAttributes = new List<string>(){"Hp"};
+            StrengthAttrubutes = new List<string>(){"HeavyAttack", "HeavyDefense","Block"};
+            DexterityAttributes = new List<string>(){"Stamina", "LightAttack", "LightDefense", "Dodge"};
+            LuckAttributes = new List<string>(){"Dodge", "Block"};
         }
         
-        changeObject.GetComponent<TextMeshProUGUI>().color = showColor;
-        changeObject.GetComponent<TextMeshProUGUI>().text = (originalValue + value).ToString() + symbol;
+        public int Constitution
+        {
+            get => character.skills.constitution;
+            set => character.skills.constitution = value;
+        }
+        public int Strength
+        {
+            get => character.skills.strength;
+            set => character.skills.strength = value;
+        }
+        public int Dexterity
+        {
+            get => character.skills.dexterity;
+            set => character.skills.dexterity = value;
+        }
+        public int Luck
+        {
+            get => character.skills.luck;
+            set => character.skills.luck = value;
+        }
+        
+        public bool IncreaseConstitution()
+        {
+            if (Xp >= ConstitutionXpPrice)
+            {
+                Xp -= ConstitutionXpPrice;
+                Constitution += 1;
+                return true;
+            }
+            return false;
+        }
+        public bool IncreaseStrength()
+        {
+            if (Xp >= StrengthXpPrice)
+            {
+                Xp -= StrengthXpPrice;
+                Strength += 1;
+                return true;
+            }
+            return false;
+        }
+        public bool IncreaseDexterity()
+        {
+            if (Xp >= DexterityXpPrice)
+            {
+                Xp -= DexterityXpPrice;
+                Dexterity += 1;
+                return true;
+            }
+            return false;
+        }
+        public bool IncreaseLuck()
+        {
+            if (Xp >= LuckXpPrice)
+            {
+                Xp -= LuckXpPrice;
+                Luck += 1;
+                return true;
+            }
+            return false;
+        }
+        
+        public int Xp
+        {
+            get => character.xp;
+            set => character.xp = value;
+        }
+        public int ConstitutionXpPrice
+        {
+            get => (Constitution * 5) - (Constitution/2);
+        }
+        public int StrengthXpPrice
+        {
+            get => (Strength * 5) - (Strength/2);
+        }
+        public int DexterityXpPrice
+        {
+            get => (Dexterity * 5) - (Dexterity/2);
+        }
+        public int LuckXpPrice
+        {
+            get => (Luck * 5) - (Luck/2);
+        }
+
+
+
+        public double Hp
+        {
+            get => Constitution * 10;
+        }
+        public double Stamina
+        {
+            get => Dexterity * 10;
+        }
+        public double HeavyAttack
+        {
+            get => Strength;
+        }
+        public double HeavyDefense
+        {
+            get => Strength;
+        }
+        public double LightAttack
+        {
+            get => Dexterity;
+        }
+        public double LightDefense
+        {
+            get => Dexterity;
+        }
+        public double Dodge
+        {
+            get => Dexterity * 0.5 + Luck ;
+        }
+        public double Block
+        {
+            get => Strength * 0.5 + Luck;
+        }
+        
+        public IList<String> GetConstitutionAttributes()
+        {
+            return ConstiutionAttributes;
+        }
+        public IList<String> GetStrengthAttributes()
+        {
+            return StrengthAttrubutes;
+        }
+        public IList<String> GetDexterityAttributes()
+        {
+            return DexterityAttributes;
+        }
+        public IList<String> GetLuckAttributes()
+        {
+            return LuckAttributes;
+        }
+        
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +10,11 @@ public class NavigationControl : MonoBehaviour
 {
     private string inventory = "BodyInventory";
     private string inventoryButtonText = "InventoryButtonText";
-    private string  skillsAttributes = "BodySkills";
+    private string  skillsAttributes = "BodyAttributesSkills";
     private string skillsAttributesButtonText = "SkillsButtonText";
+    
+    [SerializeField]
+    private AttributesSkillsView _attributesSkillsView;
     
     private string viewActive = "none";
     
@@ -50,6 +54,7 @@ public class NavigationControl : MonoBehaviour
                 break;
             case "BodySkills":
                 this.changeViewState(skillsAttributes, skillsAttributesButtonText);
+                _attributesSkillsView.StartView();
                 break;
         }
     }
