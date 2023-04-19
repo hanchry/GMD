@@ -10,11 +10,6 @@ public class CameraManager : MonoBehaviour
 
     private bool usingVirtualCam = true;
     
-    public float zoomSpeed = 1f;
-    public float zoomMin = 1f;
-    public float zoomMax = 10f;
-
-
     // Start is called before the first frame update
     void Start()
     {
