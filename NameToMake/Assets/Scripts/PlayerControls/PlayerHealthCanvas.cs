@@ -7,8 +7,9 @@ namespace PlayerControls
 {
     public class PlayerHealthCanvas : MonoBehaviour
     {
-       
+        [SerializeField]
         private HealthSystem _healthSystem;
+        [SerializeField]
         private Slider _slider;
         public void Setup(HealthSystem healthSystem)
         {
@@ -18,6 +19,7 @@ namespace PlayerControls
         void Start()
         {
             _slider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+          //  _slider.value = _healthSystem.GetHealthPercent();
         }
 
         private void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)

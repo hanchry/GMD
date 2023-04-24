@@ -20,8 +20,9 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         //_attributeSkills get the max hp from here
-        _healthSystem = new HealthSystem(100);
-
+        // _attributeSkills.Hp
+        _healthSystem = new HealthSystem(40);
+        
         _playerHealthCanvas.Setup(_healthSystem);
         
         DamageButton = GameObject.Find("Damage").GetComponent<Button>();

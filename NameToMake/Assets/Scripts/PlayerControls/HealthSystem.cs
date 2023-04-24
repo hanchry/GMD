@@ -21,7 +21,7 @@ namespace PlayerControls
 
         public float GetHealthPercent()
         {
-            return (float)health / healthMax;
+            return (float) health / healthMax;
         }
 
         public void Damage(int damageAmount)

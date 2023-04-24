@@ -6,13 +6,13 @@ namespace PlayerControls
     public class Movement : MonoBehaviour
     {
         public NavMeshAgent agent;
-
+    
         public float rotateSpeedMovement = 0.05f;
 
         private float rotateVelocity;
 
         public Animator anim;
-
+    
         private float motionSmoothTime = 0.1f;
         private static readonly int Speed = Animator.StringToHash("Speed");
 
@@ -50,9 +50,11 @@ namespace PlayerControls
                 }
             }
         }
+        
+        
         public void Animation()
         {
-            float speed = agent.velocity.magnitude/agent.speed;
+           float speed = agent.velocity.magnitude/agent.speed;
             anim.SetFloat(Speed, speed, motionSmoothTime, Time.deltaTime);
         }
     }
