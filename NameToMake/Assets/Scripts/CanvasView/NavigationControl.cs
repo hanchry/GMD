@@ -4,35 +4,26 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NavigationControl : MonoBehaviour
 {
-    private string inventory = "BodyInventory";
-    private string inventoryButtonText = "InventoryButtonText";
-    private string  skillsAttributes = "BodyAttributesSkills";
-    private string skillsAttributesButtonText = "SkillsButtonText";
-    
-    [SerializeField]
-    private AttributesSkillsView _attributesSkillsView;
-    
-    private string viewActive = "none";
     
     public void OnInventoryClick()
     {
-        if(viewActive != "none" && viewActive != "BodyInventory")
-        {
-            this.changeCheckView(viewActive);
-        }
-        this.changeCheckView("BodyInventory");
+        
     }
     public void OnSkillsAttributesClick()
     {
-        if(viewActive != "none" && viewActive != "BodySkills")
+        if (CurrentScene() == "AttributesSkills")
         {
-            this.changeCheckView(viewActive);
+            SceneManager.LoadScene("SampleScene");
         }
-        this.changeCheckView("BodySkills");
+        else
+        {
+            SceneManager.LoadScene("AttributesSkills");
+        }
     }
 
     // Start is called before the first frame update
@@ -45,39 +36,9 @@ public class NavigationControl : MonoBehaviour
     {
     }
 
-    private void changeCheckView(string view)
+    private string CurrentScene()
     {
-        switch (view)
-        {
-            case "BodyInventory":
-                this.changeViewState(inventory, inventoryButtonText);
-                break;
-            case "BodySkills":
-                this.changeViewState(skillsAttributes, skillsAttributesButtonText);
-                _attributesSkillsView.StartView();
-                break;
-        }
+        return SceneManager.GetActiveScene().name;
     }
-
-    private void changeViewState(string view, string buttonText)
-    {
-        if (!GameObject.Find(view).GetComponent<Image>().enabled)
-        {
-            GameObject.Find(buttonText).GetComponent<TextMeshProUGUI>().color = Color.white;
-            viewActive = view;
-        }
-        else
-        {
-            viewActive = "none";
-            Color color = new Color(0.624f,0.624f,0.624f, 1);
-            GameObject.Find(buttonText).GetComponent<TextMeshProUGUI>().color = color;
-        }
-        GameObject.Find(view).GetComponent<Image>().enabled = !GameObject.Find(view).GetComponent<Image>().enabled;
-        
-        int childCount = GameObject.Find(view).transform.childCount;
-        for (int i = 0; i < childCount; i++)
-        {
-            GameObject.Find(view).transform.GetChild(i).gameObject.SetActive(!GameObject.Find(view).transform.GetChild(i).gameObject.activeSelf);
-        }
-    }
+    
 }

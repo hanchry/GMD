@@ -90,9 +90,13 @@ namespace DefaultNamespace
         
         public int Xp
         {
-            get => character.xp;
-            set => character.xp = value;
+            get => PlayerPrefs.GetInt("Xp", 800);
+            
+            set => PlayerPrefs.SetInt("Xp", value);
+                
+            
         }
+
         public int ConstitutionXpPrice
         {
             get => (Constitution * 5) - (Constitution/2);
