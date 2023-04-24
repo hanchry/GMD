@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
 using ScriptableObjects;
-using TMPro;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Objects
 {
     public class AtributesSkills:MonoBehaviour
     {
@@ -114,8 +111,7 @@ namespace DefaultNamespace
             get => (Luck * 5) - (Luck/2);
         }
 
-
-
+        
         public double Hp
         {
             get => Constitution * 10;
