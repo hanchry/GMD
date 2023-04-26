@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9d422d18f34203ac48624903e338b4, type: 3}
   m_Name: PlayerSkills
   m_EditorClassIdentifier: 
-  constitution: 5
+  constitution: 2
   strength: 1
   dexterity: 1
   luck: 1
