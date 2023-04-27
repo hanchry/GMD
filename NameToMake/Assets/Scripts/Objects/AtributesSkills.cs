@@ -13,7 +13,8 @@ namespace Objects
         private List<String> StrengthAttrubutes;
         private List<String> DexterityAttributes;
         private List<String> LuckAttributes;
-        
+        private string _characterName;
+
 
         void Start()
         {
@@ -21,27 +22,29 @@ namespace Objects
             StrengthAttrubutes = new List<string>(){"HeavyAttack", "HeavyDefense","Block"};
             DexterityAttributes = new List<string>(){"Stamina", "LightAttack", "LightDefense", "Dodge"};
             LuckAttributes = new List<string>(){"Dodge", "Block"};
+            
+            _characterName = Characters.Instance.GetCurrentCharacterName();
         }
         
         public int Constitution
         {
-            get => character.skills.constitution;
-            set => character.skills.constitution = value;
+            get => PlayerPrefs.GetInt(_characterName+",Constitution", 1);
+            set => PlayerPrefs.SetInt(_characterName+",Constitution", value);
         }
         public int Strength
         {
-            get => character.skills.strength;
-            set => character.skills.strength = value;
+            get => PlayerPrefs.GetInt(_characterName+",Strength", 1);
+            set => PlayerPrefs.SetInt(_characterName+",Strength", value);
         }
         public int Dexterity
         {
-            get => character.skills.dexterity;
-            set => character.skills.dexterity = value;
+            get => PlayerPrefs.GetInt(_characterName+",Dexterity", 1);
+            set => PlayerPrefs.SetInt(_characterName+",Dexterity", value);
         }
         public int Luck
         {
-            get => character.skills.luck;
-            set => character.skills.luck = value;
+            get => PlayerPrefs.GetInt(_characterName+",Luck", 1);
+            set => PlayerPrefs.SetInt(_characterName+",Luck", value);
         }
         
         public bool IncreaseConstitution()
@@ -90,8 +93,6 @@ namespace Objects
             get => PlayerPrefs.GetInt("Xp", 800);
             
             set => PlayerPrefs.SetInt("Xp", value);
-                
-            
         }
 
         public int ConstitutionXpPrice
