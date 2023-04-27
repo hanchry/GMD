@@ -6,6 +6,20 @@ public class Characters : MonoBehaviour
 {
     private string[] _charactersNames;
     private string _currentCharacterName;
+
+
+    void Start()
+    {
+        AddTestCharacter();
+    }
+
+    private void AddTestCharacter()
+    {
+        if (GetCharactersNames().Length - 1 == 0)
+        {
+            AddCharacterName("TestyJoe");
+        }
+    }
     
     public string[] GetCharactersNames()
     {
