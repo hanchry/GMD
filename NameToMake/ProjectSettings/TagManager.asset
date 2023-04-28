@@ -8,6 +8,8 @@ TagManager:
   - XpPrice
   - SkillValue
   - Player2
+  - Enemy
+  - Waypoints
   layers:
   - Default
   - TransparentFX
