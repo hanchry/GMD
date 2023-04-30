@@ -15,7 +15,7 @@ namespace DefaultNamespace
 
         public void OnClickAddCharacter()
         {
-            Debug.Log("Add character");
+            SceneManager.LoadScene("CharacterCreate2");
         }
 
         public void OnClickCharacter(string character)
@@ -94,6 +94,9 @@ namespace DefaultNamespace
             GameObject addCharacterButton = Instantiate(Resources.Load("Prefabs/AddCharacterButton")) as GameObject;
             addCharacterButton.transform.SetParent(placeHolder.transform, false);
             addCharacterButton.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+            
+            Button button = addCharacterButton.GetComponent<Button>();
+            button.onClick.AddListener(delegate { OnClickAddCharacter(); });
         }
 
         private void Attributes()

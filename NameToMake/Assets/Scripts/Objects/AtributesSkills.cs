@@ -7,8 +7,7 @@ namespace Objects
 {
     public class AtributesSkills:MonoBehaviour
     {
-
-        [SerializeField] private Character character;
+        
         private List<String> ConstiutionAttributes;
         private List<String> StrengthAttrubutes;
         private List<String> DexterityAttributes;
@@ -18,6 +17,7 @@ namespace Objects
 
         void Start()
         {
+            Debug.Log("AtributesSkills Start");
             ConstiutionAttributes = new List<string>(){"Hp"};
             StrengthAttrubutes = new List<string>(){"HeavyAttack", "HeavyDefense","Block"};
             DexterityAttributes = new List<string>(){"Stamina", "LightAttack", "LightDefense", "Dodge"};
@@ -26,11 +26,14 @@ namespace Objects
             _characterName = Characters.Instance.GetCurrentCharacterName();
         }
         
+        
+
         public int Constitution
         {
             get => PlayerPrefs.GetInt(_characterName+",Constitution", 1);
             set => PlayerPrefs.SetInt(_characterName+",Constitution", value);
         }
+
         public int Strength
         {
             get => PlayerPrefs.GetInt(_characterName+",Strength", 1);
