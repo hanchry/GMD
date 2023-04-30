@@ -1,9 +1,7 @@
-using DefaultNamespace;
-using Objects;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PlayerControls
+namespace PlayerControls.PlayerControl
 {
     public class PlayerHealthCanvas : MonoBehaviour
     {

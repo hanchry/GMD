@@ -14,16 +14,14 @@ namespace PlayerControls
         public Animator anim;
     
         private float motionSmoothTime = 0.1f;
+        
         private static readonly int Speed = Animator.StringToHash("Speed");
 
-
-        // Start is called before the first frame update
         void Start()
         {
             agent = gameObject.GetComponent<NavMeshAgent>();
         }
 
-        // Update is called once per frame
         void Update()
         {
             Animation();

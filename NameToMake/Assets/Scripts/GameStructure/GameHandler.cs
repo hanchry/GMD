@@ -4,6 +4,7 @@ using DefaultNamespace;
 using PlayerControls;
 using UnityEngine;
 using Objects;
+using PlayerControls.PlayerControl;
 using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
