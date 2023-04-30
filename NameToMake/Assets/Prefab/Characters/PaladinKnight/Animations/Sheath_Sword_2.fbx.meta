@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9d0aa52a08a7f49bb86d05217858baf3
+guid: 2ca06fb6918db4744a7e5ee37c7047d7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Draw_Sword_1
+      name: Sheath_Sword_2
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 15
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -17,6 +17,11 @@ namespace PlayerControls
         
         private static readonly int Speed = Animator.StringToHash("Speed");
 
+        private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+        
+        private static readonly int DrawWeaponTrigger = Animator.StringToHash("DrawWeapon");
+        
+        private static readonly int SheathWeaponTrigger = Animator.StringToHash("SheathWeapon");
         void Start()
         {
             agent = gameObject.GetComponent<NavMeshAgent>();
@@ -26,6 +31,9 @@ namespace PlayerControls
         {
             Animation();
             Move();
+            Attack();
+            DrawWeapon();
+            SheathWeapon();
         }
 
         public void Move()
@@ -39,6 +47,7 @@ namespace PlayerControls
                     {
                         agent.SetDestination(hit.point);
                         agent.stoppingDistance = 0;
+                     //   anim.SetTrigger(Die);
 
                         Quaternion rotationToLookAt = Quaternion.LookRotation(hit.point - transform.position);
                         float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref rotateVelocity, rotateSpeedMovement* (Time.deltaTime*5));
@@ -48,7 +57,28 @@ namespace PlayerControls
                 }
             }
         }
-        
+        public void Attack()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                anim.SetTrigger(AttackTrigger);
+            }
+        }
+        public void DrawWeapon()
+        {
+            if (Input.GetKey( KeyCode.R))
+            {
+                anim.SetTrigger(DrawWeaponTrigger);
+            }
+        }
+        public void SheathWeapon()
+        {
+            if (Input.GetKey(KeyCode.T))
+            {
+                
+                anim.SetTrigger(SheathWeaponTrigger);
+            }
+        }
         
         public void Animation()
         {
