@@ -1,11 +1,9 @@
-using System;
-using PlayerControls.PlayerControl;
 using PlayerControls.PlayerControl.StateManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-namespace PlayerControls
+namespace PlayerControls.PlayerControl
 {
     public class Player : MonoBehaviour
     {
@@ -26,6 +24,7 @@ namespace PlayerControls
         public StateMachine movementSM;
         public StandingState standing;
         public CombatState combating;
+        public AttackState attacking;
 
 
        [HideInInspector] 
@@ -47,6 +46,7 @@ namespace PlayerControls
             movementSM = new StateMachine(); 
             standing = new StandingState(this, movementSM);
             combating = new CombatState(this, movementSM);
+            attacking = new AttackState(this, movementSM);
             movementSM.Initialize(standing);
        }
 

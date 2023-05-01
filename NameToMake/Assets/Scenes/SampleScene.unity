@@ -1340,8 +1340,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 543450652456531025}
-  m_Follow: {fileID: 543450652456531025}
+  m_LookAt: {fileID: 1043489741}
+  m_Follow: {fileID: 1043489741}
   m_Lens:
     FieldOfView: 60.000004
     OrthographicSize: 5
@@ -1376,7 +1376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503003138}
   m_LocalRotation: {x: 0.04481445, y: -0.88921255, z: 0.4464594, w: 0.08925687}
-  m_LocalPosition: {x: -175.73824, y: 9.510004, z: 658.288}
+  m_LocalPosition: {x: -173.90085, y: 9.020024, z: 650.50433}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1878,7 +1878,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.04481445, y: -0.88921255, z: 0.4464594, w: 0.08925687}
-  m_LocalPosition: {x: -175.73824, y: 9.510004, z: 658.288}
+  m_LocalPosition: {x: -173.90085, y: 9.020024, z: 650.50433}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2270,6 +2270,11 @@ MonoBehaviour:
   PlayerInput: {fileID: 0}
   CharacterController: {fileID: 0}
   NavMeshAgent: {fileID: 1043489736}
+--- !u!4 &1043489741 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd7c15f4e47d24e24a978c2bd706c016, type: 3}
+  m_PrefabInstance: {fileID: 1043489734}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1043489742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3830,11 +3835,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: bd7c15f4e47d24e24a978c2bd706c016, type: 3}
   m_PrefabInstance: {fileID: 1043489734}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &543450652456531025 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e9cdc8702ff864679b1442add0ed5870, type: 3}
-  m_PrefabInstance: {fileID: 1746822610}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6333914329255134383
 PrefabInstance:

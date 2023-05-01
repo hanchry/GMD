@@ -9,8 +9,10 @@ namespace PlayerControls.PlayerControl.StateManagement
         float rotationSpeed;
         float rotateSpeedMovement;
         bool sheathWeapon;
+        bool attack;
         
         private static readonly int SheathWeapon = Animator.StringToHash("SheathWeapon");
+        private static readonly int Attack = Animator.StringToHash("Attack");
         
         private Transform _transform;
         private NavMeshAgent _navMeshAgent;
@@ -24,6 +26,8 @@ namespace PlayerControls.PlayerControl.StateManagement
         {
             base.Enter();
             sheathWeapon = false;
+            attack = false;
+            
             rotateSpeedMovement = Player.rotationDampTime;
             _transform = Player.transform;
             rotationSpeed = Player.rotationSpeed;
@@ -40,6 +44,10 @@ namespace PlayerControls.PlayerControl.StateManagement
             {
                 sheathWeapon = true;
             }
+            if (attackAction.triggered)
+            {
+                attack = true;
+            }
             
         }
 
@@ -53,6 +61,11 @@ namespace PlayerControls.PlayerControl.StateManagement
             {
                 Player.Animator.SetTrigger(SheathWeapon);
                 StateMachine.ChangeState(Player.standing);
+            }
+            if (attack)
+            {
+                Player.Animator.SetTrigger(Attack);
+                StateMachine.ChangeState(Player.attacking);
             }
         }
         public void OnMovePerformed(InputAction.CallbackContext context)
