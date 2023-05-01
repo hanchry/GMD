@@ -47,7 +47,6 @@ namespace PlayerControls
                     {
                         agent.SetDestination(hit.point);
                         agent.stoppingDistance = 0;
-                     //   anim.SetTrigger(Die);
 
                         Quaternion rotationToLookAt = Quaternion.LookRotation(hit.point - transform.position);
                         float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref rotateVelocity, rotateSpeedMovement* (Time.deltaTime*5));
