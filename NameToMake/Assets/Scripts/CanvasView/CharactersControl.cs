@@ -20,6 +20,7 @@ namespace DefaultNamespace
 
         public void OnClickCharacter(string character)
         {
+            ToggleDeleteButton(true);
             Characters.Instance.SetCurrentCharacterName(character);
             Attributes();
             PlayButtonShow();
@@ -27,7 +28,7 @@ namespace DefaultNamespace
 
         public void OnClickDelete()
         {
-            Debug.Log("Delete");
+            DeleteCharacter();
         }
 
         public void OnClickPlay()
@@ -39,6 +40,20 @@ namespace DefaultNamespace
         {
             SetupCharacterButtons();
             ToggleDeleteButton(false);
+        }
+        
+        private void DeleteCharacter()
+        {
+            if (GameObject.Find("DeleteButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().color ==
+                Color.white)
+            {
+                Characters.Instance.RemoveCharacterName(Characters.Instance.GetCurrentCharacterName());
+                Characters.Instance.SetCurrentCharacterName("");
+                SetupCharacterButtons();
+                ToggleDeleteButton(false);
+                Destroy(GameObject.Find("Atributes(Clone)"));
+                Destroy(GameObject.Find("PlayButton(Clone)"));
+            }
         }
 
         private void ToggleDeleteButton(bool show)

@@ -334,7 +334,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -36.69513}
-  m_SizeDelta: {x: 16, y: 73.3903}
+  m_SizeDelta: {x: 0, y: 73.3903}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &624451531
 MonoBehaviour:
@@ -681,7 +681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2012834348036042519, guid: a1f02fa595e9a8c408aa6f3b3bc5ef9b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2012834348036042519, guid: a1f02fa595e9a8c408aa6f3b3bc5ef9b, type: 3}
       propertyPath: m_AnchorMin.x
@@ -689,7 +689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2012834348036042519, guid: a1f02fa595e9a8c408aa6f3b3bc5ef9b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2012834348036042519, guid: a1f02fa595e9a8c408aa6f3b3bc5ef9b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -697,7 +697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2012834348036042519, guid: a1f02fa595e9a8c408aa6f3b3bc5ef9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 433.61
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2012834348036042519, guid: a1f02fa595e9a8c408aa6f3b3bc5ef9b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -733,7 +733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2012834348036042519, guid: a1f02fa595e9a8c408aa6f3b3bc5ef9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2012834348036042519, guid: a1f02fa595e9a8c408aa6f3b3bc5ef9b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1420,7 +1420,7 @@ GameObject:
   - component: {fileID: 1863838553}
   - component: {fileID: 1863838552}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: PlayerName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
