@@ -27,5 +27,16 @@ namespace PlayerControls.PlayerControl
             _currentWeaponInSheath = Instantiate(weapon, weaponSheath.transform);
             Destroy(_currentWeaponInHand);
         }
+
+        public void StartDealDamage()
+        {
+            _currentWeaponInHand.GetComponentInChildren<DamageDealer>().StartDealDamage();
+        }
+        
+        public void EndDealDamage()
+        {
+            _currentWeaponInHand.GetComponentInChildren<DamageDealer>().EndDealDamage();
+        }
+
     }
 }
