@@ -1,23 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PlayerControls.PlayerControl
+namespace PlayerControls
 {
-    public class PlayerHealthCanvas : MonoBehaviour
+    public class HealthCanvas : MonoBehaviour
     {
         [SerializeField]
         private HealthSystem _healthSystem;
         [SerializeField]
         private Slider _slider;
-        public void Setup(HealthSystem healthSystem)
+        public void Setup(HealthSystem healthSystem, Slider slider)
         {
-            this._healthSystem = healthSystem;
+            _healthSystem = healthSystem;
+            _slider = slider;
             healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
-        }
-        void Start()
-        {
-            _slider = GetComponent<Slider>();
-          //  _slider.value = _healthSystem.GetHealthPercent();
         }
 
         private void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)
@@ -27,8 +23,8 @@ namespace PlayerControls.PlayerControl
         // Update is called once per frame
         void LateUpdate()
         {
-          transform.LookAt(Camera.main.transform);
-          transform.Rotate(0,180,0 );
+            transform.LookAt(Camera.main.transform);
+            transform.Rotate(0,180,0 );
         }
         
     }

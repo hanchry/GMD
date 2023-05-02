@@ -9,14 +9,15 @@ using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
+    [SerializeField]
     private HealthSystem _healthSystem;
-    
+    [SerializeField]
+    private HealthCanvas _playerHealthCanvas;
     private AtributesSkills _attributeSkills;
 
     private Button DamageButton;
     private Button HealButton;
-
-    public PlayerHealthCanvas _playerHealthCanvas;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class GameHandler : MonoBehaviour
         // _attributeSkills.Hp
         _healthSystem = new HealthSystem(40);
         
-        _playerHealthCanvas.Setup(_healthSystem);
+        //_playerHealthCanvas.Setup(_healthSystem);
         
         // DamageButton = GameObject.Find("Damage").GetComponent<Button>();
         // HealButton = GameObject.Find("Heal").GetComponent<Button>();

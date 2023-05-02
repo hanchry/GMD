@@ -1,20 +1,27 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PlayerControls.CreatureControl
 {
     public class Creature :MonoBehaviour
     {
+        [SerializeField]
         private HealthSystem _healthSystem;
-
+        [SerializeField]
+        private HealthCanvas _healthCanvas;
+        [SerializeField]
+        private Slider _slider;
         public Animator Animator;
         private static readonly int Die = Animator.StringToHash("die");
         private static readonly int Damage = Animator.StringToHash("damage");
         
         private void Start()
         {
+            // get from ui
             _healthSystem = new HealthSystem(100);
+            _healthCanvas.Setup(_healthSystem,_slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
         }
 
@@ -25,7 +32,8 @@ namespace PlayerControls.CreatureControl
              if (healthValue <= 0)
              {
                  Animator.SetTrigger(Die);
-               //  Destroy(this.gameObject);
+                 GetComponent<Collider>().enabled = false;
+                 //  Destroy(this.gameObject);
              }
              else
              {
