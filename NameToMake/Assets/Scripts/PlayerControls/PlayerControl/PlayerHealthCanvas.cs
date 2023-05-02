@@ -16,7 +16,7 @@ namespace PlayerControls.PlayerControl
         }
         void Start()
         {
-            _slider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+            _slider = GetComponent<Slider>();
           //  _slider.value = _healthSystem.GetHealthPercent();
         }
 

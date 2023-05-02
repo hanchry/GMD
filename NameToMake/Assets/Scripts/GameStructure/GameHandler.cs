@@ -26,19 +26,19 @@ public class GameHandler : MonoBehaviour
         
         _playerHealthCanvas.Setup(_healthSystem);
         
-        DamageButton = GameObject.Find("Damage").GetComponent<Button>();
-        HealButton = GameObject.Find("Heal").GetComponent<Button>();
+        // DamageButton = GameObject.Find("Damage").GetComponent<Button>();
+        // HealButton = GameObject.Find("Heal").GetComponent<Button>();
         
-        DamageButton.onClick.AddListener(() =>
-        {
-            _healthSystem.Damage(10);
-            Debug.Log("damage clicked: "+_healthSystem.GetHealth());
-        });
-        HealButton.onClick.AddListener(() =>
-        {
-            _healthSystem.Heal(5);
-            Debug.Log("heal clicked: " +_healthSystem.GetHealth());
-        });
+        // DamageButton.onClick.AddListener(() =>
+        // {
+        //     _healthSystem.Damage(10);
+        //     Debug.Log("damage clicked: "+_healthSystem.GetHealth());
+        // });
+        // HealButton.onClick.AddListener(() =>
+        // {
+        //     _healthSystem.Heal(5);
+        //     Debug.Log("heal clicked: " +_healthSystem.GetHealth());
+        // });
     }
 
     // Update is called once per frame

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EnemyStateControllers
+namespace PlayerControls.CreatureControl
 {
     public class IdleState : StateMachineBehaviour
     {

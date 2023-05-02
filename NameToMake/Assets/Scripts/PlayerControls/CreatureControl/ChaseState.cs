@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace EnemyStateControllers
+namespace PlayerControls.CreatureControl
 {
     public class ChaseState : StateMachineBehaviour
     {
@@ -18,17 +18,16 @@ namespace EnemyStateControllers
         {
             agent = animator.GetComponent<NavMeshAgent>();
             player = GameObject.FindGameObjectWithTag("Player").transform;
-
             agent.speed = 3.5f;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            agent.SetDestination(player.position);
-        
-            float distance = Vector3.Distance(player.position, animator.transform.position);
-            if (distance > 15)
+            var position = player.position;
+            agent.SetDestination(position);
+            float distance = Vector3.Distance(position, animator.transform.position);
+            if (distance > 13)
             {
                 animator.SetBool(IsChasing,false);
             }

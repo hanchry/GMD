@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EnemyStateControllers
+namespace PlayerControls.CreatureControl
 {
     public class PunchAttackState : StateMachineBehaviour
     {
@@ -18,10 +18,10 @@ namespace EnemyStateControllers
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            
-            animator.transform.LookAt(player);
-            float distance = Vector3.Distance(player.position, animator.transform.position);
-            if (distance > 3.5)
+            Transform transform;
+            (transform = animator.transform).LookAt(player);
+            float distance = Vector3.Distance(player.position, transform.position);
+            if (distance > 6)
             {
                 animator.SetBool(IsAttacking,false);
             }

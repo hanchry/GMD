@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PlayerControls.CreatureControl;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public class DamageDealer : MonoBehaviour
 {
@@ -10,12 +12,14 @@ public class DamageDealer : MonoBehaviour
     private List<GameObject> hasDealtDamage;
 
     [SerializeField] private float weaponLength;
-    [SerializeField] private float weaponDamage;
+    [SerializeField] private int weaponDamage;
     
     void Start()
     {
         canDealDamage = false;
         hasDealtDamage = new List<GameObject>();
+        // will be taken from Andrej's ui/ or add a listener to those values
+        weaponDamage = 40;
     }
 
     // Update is called once per frame
@@ -27,9 +31,10 @@ public class DamageDealer : MonoBehaviour
             int layerMask = 1 << 9;
             if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, layerMask))
             {
-                if (!hasDealtDamage.Contains(hit.transform.gameObject))
+                if (hit.transform.TryGetComponent(out Creature creature) && !hasDealtDamage.Contains(hit.transform.gameObject))
                 {
-                    print("damage");
+                    Debug.Log("damage");
+                    creature.TakeDamage(weaponDamage);
                     hasDealtDamage.Add(hit.transform.gameObject);
                 }
             }

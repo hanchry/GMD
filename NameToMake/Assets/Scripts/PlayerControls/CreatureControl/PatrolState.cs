@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace EnemyStateControllers
+namespace PlayerControls.CreatureControl
 {
     public class PatrolState : StateMachineBehaviour
     {   
@@ -11,7 +11,7 @@ namespace EnemyStateControllers
 
         private List<Transform> waypoints = new List<Transform>();
     
-        private float chaseRange = 8;
+        private float chaseRange = 13;
     
         private static readonly int IsPatrolling = Animator.StringToHash("IsPatrolling");
         private static readonly int IsChasing = Animator.StringToHash("IsChasing");
