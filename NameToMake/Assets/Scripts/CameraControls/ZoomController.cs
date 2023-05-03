@@ -7,8 +7,8 @@ namespace CameraControls
     {
     
         public CinemachineVirtualCamera _virtualCamera;
-        private float fieldOfViewMin = 30f;
-        private float fieldOfViewMax = 180f;
+        private float fieldOfViewMin = 20f;
+        private float fieldOfViewMax = 110f;
         private float targetFieldOfView = 50;
         
         private float followOffsetMin = 10f;
@@ -29,8 +29,8 @@ namespace CameraControls
         // Update is called once per frame
         void Update()
         {
-
-             HandleCameraZoom_MoveCamera();
+            HandleCameraZoom_FieldOfView();
+            // HandleCameraZoom_MoveCamera();
         }
 
         private void HandleCameraZoom_FieldOfView()
