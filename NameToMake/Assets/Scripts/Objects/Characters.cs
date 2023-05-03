@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,28 @@ public class Characters : MonoBehaviour
     private string[] _charactersNames;
     private string _currentCharacterName;
 
+    private static Characters _instance;
+    
+    public static Characters Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<Characters>();
+                if (_instance == null)
+                {
+                    GameObject singleton = new GameObject();
+                    _instance = singleton.AddComponent<Characters>();
+                    singleton.name = typeof(Characters).ToString();
+                    
+                    // DontDestroyOnLoad(singleton);
+                }
+            }
+            return _instance;
+        }
+    }
+    
 
     void Start()
     {

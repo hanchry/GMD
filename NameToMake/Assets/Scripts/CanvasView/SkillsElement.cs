@@ -26,18 +26,21 @@ namespace DefaultNamespace
         
         public void OnHoverStrength()
         {
+            ToggleXpPrices(true);
             atributesSkills.Strength += 1;
             attributesElement.SetAttributesView(atributesSkills.GetStrengthAttributes(), true);
             atributesSkills.Strength -= 1;
         }
         public void OnHoverDexterity()
         {
+            ToggleXpPrices(true);
             atributesSkills.Dexterity += 1;
             attributesElement.SetAttributesView(atributesSkills.GetDexterityAttributes(), true);
             atributesSkills.Dexterity -= 1;
         }
         public void OnHoverLuck()
         {
+            ToggleXpPrices(true);
             atributesSkills.Luck += 1;
             attributesElement.SetAttributesView(atributesSkills.GetLuckAttributes(), true);
             atributesSkills.Luck -= 1;
@@ -50,14 +53,17 @@ namespace DefaultNamespace
         }
         public void OnHoverExitStrength()
         {
+            ToggleXpPrices(false);
             attributesElement.SetAttributesView(atributesSkills.GetStrengthAttributes(), false);
         }
         public void OnHoverExitDexterity()
         {
+            ToggleXpPrices(false);
             attributesElement.SetAttributesView(atributesSkills.GetDexterityAttributes(), false);
         }
         public void OnHoverExitLuck()
         {
+            ToggleXpPrices(false);
             attributesElement.SetAttributesView(atributesSkills.GetLuckAttributes(), false);
         }
         
@@ -92,6 +98,7 @@ namespace DefaultNamespace
         {
             if (atributesSkills.IncreaseLuck())
             {
+                Debug.Log("Luck");
                 RefreshValues();
                 ToggleXpPrices(true);
                 OnHoverLuck();
@@ -101,12 +108,13 @@ namespace DefaultNamespace
         void Start()
         {
             Debug.Log("SkillsElement Start");
-            RefreshSkills();
-            SetMainXpValue();
             ToggleXpPrices(false);
+            Invoke("RefreshValues", 0.0000001f); // its because persistance loads later than this, preferably fix when time
+            // RefreshSkills();
+            // SetMainXpValue();
         }
 
-        public void RefreshValues()
+        private void RefreshValues()
         {
             attributesElement.RefreshValues();
             RefreshSkills();
@@ -144,7 +152,7 @@ namespace DefaultNamespace
                 {
                     element.transform.GetChild(i).gameObject.SetActive(show);
                 }
-        
+                
                 element.GetComponent<Image>().enabled = show;
             }
         }

@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AttributesSkills.unity
     guid: 3aa95e4561b042647866e3ae8e31a59d
+  - enabled: 1
+    path: Assets/Scenes/CharacterCreate1.unity
+    guid: addbdf52ed3598e44a64d63b359009fa
+  - enabled: 1
+    path: Assets/Scenes/CharacterCreate2.unity
+    guid: 968cd88776c907045b1dec4e9101fed7
   m_configObjects: {}
