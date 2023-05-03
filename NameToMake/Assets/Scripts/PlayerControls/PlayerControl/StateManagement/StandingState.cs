@@ -7,11 +7,11 @@ namespace PlayerControls.PlayerControl.StateManagement
 {
     public class StandingState :State
     {
-         Vector3 currentVelocity;
-         float playerSpeed;
-         float rotationSpeed;
+        float playerSpeed;
+         float rotateVelocity;
          float speedDampTime;
          float rotateSpeedMovement;
+         
          bool drawWeapon;
          
          private Transform _transform;
@@ -30,7 +30,7 @@ namespace PlayerControls.PlayerControl.StateManagement
             input = Vector2.zero;
             _transform = Player.transform;
             _navMeshAgent = Player.NavMeshAgent;
-            rotationSpeed = Player.rotationSpeed;
+           
             rotateSpeedMovement = Player.rotationDampTime;
             drawWeapon = false;
 
@@ -69,8 +69,9 @@ namespace PlayerControls.PlayerControl.StateManagement
                 {
                     _navMeshAgent.SetDestination(hit.point);
                     _navMeshAgent.stoppingDistance = 0;
+                    
                    Quaternion rotationToLookAt = Quaternion.LookRotation(hit.point - _transform.position);
-                    float rotationY = Mathf.SmoothDampAngle(_transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref rotationSpeed, rotateSpeedMovement* (Time.deltaTime*5));
+                    float rotationY = Mathf.SmoothDampAngle(_transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref rotateVelocity, rotateSpeedMovement* (Time.deltaTime*5));
         
                     _transform.eulerAngles = new UnityEngine.Vector3(0, rotationY, 0);
                 }
