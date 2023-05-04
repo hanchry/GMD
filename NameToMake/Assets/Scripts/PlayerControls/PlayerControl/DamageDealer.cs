@@ -56,6 +56,9 @@ namespace PlayerControls.PlayerControl
             var transform1 = transform;
             var position = transform1.position;
             Gizmos.DrawLine(position, position - transform1.up * weaponLength);
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(transform.position, -transform.up);
         }
     }
 }

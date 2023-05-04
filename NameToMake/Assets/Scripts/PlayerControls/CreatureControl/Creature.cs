@@ -14,11 +14,14 @@ namespace PlayerControls.CreatureControl
         [SerializeField]
         private Slider _slider;
         public Animator Animator;
+
+        private GameObject player;
         private static readonly int Die = Animator.StringToHash("die");
         private static readonly int Damage = Animator.StringToHash("damage");
         
         private void Start()
         {
+            player = GameObject.FindGameObjectWithTag("Player");
             // get from ui
             _healthSystem = new HealthSystem(100);
             _healthCanvas.Setup(_healthSystem,_slider);
