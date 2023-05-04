@@ -7,59 +7,33 @@ namespace CameraControls
     {
     
         public CinemachineVirtualCamera _virtualCamera;
-        private float fieldOfViewMin = 20f;
-        private float fieldOfViewMax = 110f;
-        private float targetFieldOfView = 50;
-        
-        private float followOffsetMin = 10f;
+
+        private float followOffsetMin = 20f;
         private float followOffsetMax = 60f;
         private Vector3 followOffset;
 
         private void Awake()
         {
-            followOffset = _virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+            followOffset = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset;
         }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            // HandleCameraZoom_MoveCamera();
-        }
-    
+        
         // Update is called once per frame
-        void Update()
+        void LateUpdate()
         {
-            HandleCameraZoom_FieldOfView();
-            // HandleCameraZoom_MoveCamera();
+            HandleCameraZoom_MoveCamera();
         }
-
-        private void HandleCameraZoom_FieldOfView()
-        {
-            float fieldOfViewIncreaseAmount = 5f;
-            if (Input.mouseScrollDelta.y > 0)
-            {
-                targetFieldOfView -= fieldOfViewIncreaseAmount;
-            }
-            if (Input.mouseScrollDelta.y < 0)
-            {
-                targetFieldOfView += fieldOfViewIncreaseAmount;
-            }
-
-            targetFieldOfView = Mathf.Clamp(targetFieldOfView, fieldOfViewMin, fieldOfViewMax);
-            float zoomSpeed = 3f;
-            _virtualCamera.m_Lens.FieldOfView = 
-                Mathf.Lerp(_virtualCamera.m_Lens.FieldOfView, targetFieldOfView, Time.deltaTime * zoomSpeed);
-        }
+        
         private void HandleCameraZoom_MoveCamera()
         {
             Vector3 zoomDir = followOffset.normalized;
+            float zoomAmount = 2f; 
             if (Input.mouseScrollDelta.y > 0)
             {
-                followOffset += zoomDir;
+                followOffset += zoomDir* zoomAmount;
             }
             if (Input.mouseScrollDelta.y < 0)
             {
-                followOffset -= zoomDir;
+                followOffset -= zoomDir* zoomAmount;
             }
 
             if (followOffset.magnitude < followOffsetMin)
@@ -72,11 +46,11 @@ namespace CameraControls
             }
 
             float zoomSpeed = 10f;
-            _virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = 
-                Vector3.Lerp(_virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset,
+            _virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = 
+                Vector3.Lerp(_virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset,
                     followOffset, Time.deltaTime * zoomSpeed);
 
-            _virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = followOffset;
+            _virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = followOffset;
         }
     
     }

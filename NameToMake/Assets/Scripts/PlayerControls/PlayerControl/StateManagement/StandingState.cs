@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 using Vector3 = System.Numerics.Vector3;
 
 namespace PlayerControls.PlayerControl.StateManagement
@@ -11,13 +12,15 @@ namespace PlayerControls.PlayerControl.StateManagement
          float rotateVelocity;
          float speedDampTime;
          float rotateSpeedMovement;
-         
+         float attackRange;
          bool drawWeapon;
          
          private Transform _transform;
          private NavMeshAgent _navMeshAgent;
          private static readonly int DrawWeapon = Animator.StringToHash("DrawWeapon");
 
+         public GameObject targetedEnemy;
+         
          public StandingState(Player _player, StateMachine _stateMachine) : base(_player, _stateMachine)
         {
             Player = _player;
@@ -35,6 +38,7 @@ namespace PlayerControls.PlayerControl.StateManagement
             drawWeapon = false;
 
             moveAction.performed += OnMovePerformed;
+           // attackAction.performed += OnEnemyTargetedPerformed;
         }
 
         public override void LogicUpdate()
@@ -75,6 +79,21 @@ namespace PlayerControls.PlayerControl.StateManagement
         
                     _transform.eulerAngles = new UnityEngine.Vector3(0, rotationY, 0);
                 }
+            }
+        }
+        public void OnEnemyTargetedPerformed(InputAction.CallbackContext context)
+        {
+            if (targetedEnemy != null)
+            {
+
+                UnityEngine.Vector3 position = Player.gameObject.transform.position;   
+                UnityEngine.Vector3 myVector = new UnityEngine.Vector3(position.x, position.y, position.z);
+                System.Numerics.Vector3 numericVector = new System.Numerics.Vector3(0,0,0);
+                // if (Vector3.Distance( myVector , targetedEnemy.transform.position) > attackRange)
+                // {
+                //     _navMeshAgent.SetDestination(targetedEnemy.transform.position);
+                //     _navMeshAgent.stoppingDistance = attackRange;
+                // }
             }
         }
     }

@@ -31,14 +31,13 @@ namespace PlayerControls.PlayerControl
        public Animator Animator;
        [HideInInspector] 
        public PlayerInput PlayerInput;
-       [HideInInspector] 
-       public CharacterController CharacterController;
+    
        
        public NavMeshAgent NavMeshAgent;
 
        private void Start()
        {
-           CharacterController = GetComponent<CharacterController>();
+           
             Animator = GetComponent<Animator>();
             PlayerInput = GetComponent<PlayerInput>();
             NavMeshAgent = GetComponent<NavMeshAgent>();

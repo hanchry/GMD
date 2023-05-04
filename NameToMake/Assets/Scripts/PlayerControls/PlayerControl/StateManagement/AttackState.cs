@@ -25,7 +25,6 @@ public class AttackState : State
     public override void Enter()
     {
         base.Enter();
-
         attack = false;
         Player.Animator.applyRootMotion = true;
         timePassed = 0f;
@@ -65,7 +64,7 @@ public class AttackState : State
     public override void Exit()
     {
         base.Exit();
-      //  Player.Animator.applyRootMotion = true;
+       // Player.Animator.applyRootMotion = true;
     }
     
 }
