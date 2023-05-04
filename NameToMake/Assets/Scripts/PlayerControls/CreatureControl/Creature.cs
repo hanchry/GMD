@@ -48,5 +48,14 @@ namespace PlayerControls.CreatureControl
         {
             this._healthSystem.Damage(damage);
         }
+        public void StartDealDamage()
+        {
+            GetComponentInChildren<CreatureDamageDealer>().StartDealDamage();
+        }
+        public void EndDealDamage()
+        {
+            GetComponentInChildren<CreatureDamageDealer>().EndDealDamage();
+        }
+
     }
 }
