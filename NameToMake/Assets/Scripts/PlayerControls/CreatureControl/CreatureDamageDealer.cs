@@ -1,3 +1,4 @@
+using PlayerControls.PlayerControl;
 using UnityEngine;
 
 namespace PlayerControls.CreatureControl
@@ -6,18 +7,22 @@ namespace PlayerControls.CreatureControl
     {
         
         [SerializeField]
-        private float weaponLength;
+        private float radius;
         [SerializeField]
-        private float weaponDamage;
+        private float maxDistance;
 
         private bool canDealDamage;
-
         private bool hasDealtDamage;
+
+        private int weaponDamage = 30;
+        
         // Start is called before the first frame update
         void Start()
         { 
             canDealDamage = false;
             hasDealtDamage = false;
+            radius = 0.5f;
+            maxDistance = 3f;
         }
 
         // Update is called once per frame
@@ -26,12 +31,18 @@ namespace PlayerControls.CreatureControl
             if (canDealDamage && !hasDealtDamage)
             {
                 RaycastHit hit;
-                int layerMask = 1 << 8;
-                Debug.DrawRay(transform.position,-transform.up);
-                if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, layerMask))
+                Vector3 origin = transform.position;
+                Vector3 direction = transform.forward;
+                int layerMask = LayerMask.GetMask("Player");
+                if (Physics.SphereCast(origin, radius,direction, out hit, maxDistance, layerMask))
                 {
-                    Debug.Log("ENEMY GAVE DAMAGE");
-                    hasDealtDamage = true;
+                    if (hit.transform.TryGetComponent(out Player player))
+                    {
+                        Debug.Log("damage");
+                        player.TakeDamage(weaponDamage);
+                        
+                        hasDealtDamage = true;
+                    }
                 }
             }
         
@@ -50,13 +61,11 @@ namespace PlayerControls.CreatureControl
         
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.yellow;
-            var transform1 = transform;
-            var position = transform1.position;
-            Gizmos.DrawLine(position, position - transform1.up * weaponLength);
-            
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(transform.position, -transform.up);
+            Vector3 origin = transform.position;
+            Vector3 direction = transform.forward;
+            float radius = 0.5f;
+            Gizmos.DrawSphere(origin, radius);
         }
     }
 }

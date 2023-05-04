@@ -7,7 +7,7 @@ namespace PlayerControls.CreatureControl
 {
     public class Creature :MonoBehaviour
     {
-        [SerializeField]
+        
         private HealthSystem _healthSystem;
         [SerializeField]
         private HealthCanvas _healthCanvas;

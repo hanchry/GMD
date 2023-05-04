@@ -2,11 +2,19 @@ using PlayerControls.PlayerControl.StateManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace PlayerControls.PlayerControl
 {
     public class Player : MonoBehaviour
     {
+        
+        private HealthSystem _healthSystem;
+        [SerializeField]
+        private HealthCanvas _healthCanvas;
+        [SerializeField]
+        private Slider _slider;
+        
         [Header("Controls")] 
         public float playerSpeed = 5.0f;
         public float rotationSpeed;
@@ -31,10 +39,12 @@ namespace PlayerControls.PlayerControl
        public Animator Animator;
        [HideInInspector] 
        public PlayerInput PlayerInput;
-    
+       
        
        public NavMeshAgent NavMeshAgent;
 
+       private static readonly int Die = Animator.StringToHash("die");
+       private static readonly int Damage = Animator.StringToHash("Damage");
        private void Start()
        {
            
@@ -47,8 +57,33 @@ namespace PlayerControls.PlayerControl
             combating = new CombatState(this, movementSM);
             attacking = new AttackState(this, movementSM);
             movementSM.Initialize(standing);
+            
+            _healthSystem = new HealthSystem(100);
+            _healthCanvas.Setup(_healthSystem,_slider);
+            _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
        }
 
+       public void TakeDamage(int damage)
+       {
+           this._healthSystem.Damage(damage);
+       }
+       
+       private  void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)
+       {
+           float healthValue = _healthSystem.GetHealthPercent();
+             
+           if (healthValue <= 0)
+           {
+               Debug.Log("He's dead");
+              // Animator.SetTrigger(Die);
+               GetComponent<Collider>().enabled = false;
+               //  Destroy(this.gameObject);
+           }
+           else
+           {
+               Animator.SetTrigger(Damage);
+           }
+       }
        public void Update()
        { 
            movementSM.currentState.HandleInput(); 
