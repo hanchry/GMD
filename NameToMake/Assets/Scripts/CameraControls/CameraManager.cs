@@ -9,12 +9,6 @@ public class CameraManager : MonoBehaviour
     public Camera mainCamera;
 
     private bool usingVirtualCam = true;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -40,20 +34,20 @@ public class CameraManager : MonoBehaviour
 
             if (x < 10)
             {
-                mainCamera.transform.position -= Vector3.left * (Time.deltaTime * 10);
+                mainCamera.transform.position -= Vector3.forward * (Time.deltaTime * 10);
             }
             else if (x > Screen.width - 10)
             {
-                mainCamera.transform.position -= Vector3.right * (Time.deltaTime * 10);
+                mainCamera.transform.position -= Vector3.back * (Time.deltaTime * 10);
             }
 
             if (y < 10)
             {
-                mainCamera.transform.position -= Vector3.back * (Time.deltaTime * 10);
+                mainCamera.transform.position -= Vector3.left * (Time.deltaTime * 10);
             }
             else if(y > Screen.height - 10)
             {
-                mainCamera.transform.position -= Vector3.forward * (Time.deltaTime * 10);
+                mainCamera.transform.position -= Vector3.right * (Time.deltaTime * 10);
 
             }
         }
