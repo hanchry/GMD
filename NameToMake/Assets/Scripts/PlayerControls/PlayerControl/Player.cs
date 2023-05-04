@@ -43,7 +43,7 @@ namespace PlayerControls.PlayerControl
        
        public NavMeshAgent NavMeshAgent;
 
-       private static readonly int Die = Animator.StringToHash("die");
+       private static readonly int Die = Animator.StringToHash("Die");
        private static readonly int Damage = Animator.StringToHash("Damage");
        private void Start()
        {
@@ -74,9 +74,9 @@ namespace PlayerControls.PlayerControl
              
            if (healthValue <= 0)
            {
-               Debug.Log("He's dead");
-              // Animator.SetTrigger(Die);
+               Animator.SetTrigger(Die);
                GetComponent<Collider>().enabled = false;
+               // add wait for 5 sec
                //  Destroy(this.gameObject);
            }
            else

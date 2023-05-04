@@ -36,6 +36,7 @@ namespace PlayerControls.CreatureControl
              {
                  Animator.SetTrigger(Die);
                  GetComponent<Collider>().enabled = false;
+                 // add wait for 5 sec
                  //  Destroy(this.gameObject);
              }
              else
