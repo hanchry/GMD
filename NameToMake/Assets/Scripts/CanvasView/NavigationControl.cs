@@ -12,7 +12,14 @@ public class NavigationControl : MonoBehaviour
     
     public void OnInventoryClick()
     {
-        
+        if(CurrentScene() == "Inventory")
+        {
+            SceneManager.LoadScene("SampleScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("Inventory");
+        }
     }
     public void OnSkillsAttributesClick()
     {
