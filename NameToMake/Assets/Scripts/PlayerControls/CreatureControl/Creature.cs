@@ -26,7 +26,7 @@ namespace PlayerControls.CreatureControl
         private void Start()
         {
             _player = GameObject.FindGameObjectWithTag("Player");
-           // _playerExperienceSystem = _player.GetComponent<ExperienceSystem>();
+            _playerExperienceSystem = ExperienceSystem.Instance(4);
             // get from ui
             _healthSystem = new HealthSystem(100);
             _healthCanvas.Setup(_healthSystem,_slider);
@@ -39,8 +39,7 @@ namespace PlayerControls.CreatureControl
              
              if (healthValue <= 0)
              {
-                 // update in the UI
-                // _playerExperienceSystem.GetExperience(5);
+                 _playerExperienceSystem.GetExperience(5);
                  Animator.SetTrigger(Die);
                  GetComponent<Collider>().enabled = false;
                  StartCoroutine(DeathCreature());
@@ -52,7 +51,7 @@ namespace PlayerControls.CreatureControl
         }
         IEnumerator DeathCreature()
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(10);
             Destroy(this.gameObject);
         }
 

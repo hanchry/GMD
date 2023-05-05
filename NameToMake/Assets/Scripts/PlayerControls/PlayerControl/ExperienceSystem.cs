@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace PlayerControls.PlayerControl
 {
@@ -12,27 +13,37 @@ namespace PlayerControls.PlayerControl
             NewLevel = newLevel;
         }
     }
-    public class ExperienceSystem
+    public class ExperienceSystem 
     {
         public event EventHandler OnExperienceChanged;
-
+        public event EventHandler<LevelChangedEventArgs> LevelChanged;
+        
         private int _experience;
         private int _experienceLevel;
         private int _level;
-        
-        public event EventHandler<LevelChangedEventArgs> LevelChanged;
 
-        public ExperienceSystem(int experience,int experienceLevel,int level)
+        private static ExperienceSystem _instance;
+        
+        private ExperienceSystem(int experience,int experienceLevel,int level)
         {
             this._experienceLevel = experienceLevel;
             _experience = experience;
             _level = level;
         }
-        public ExperienceSystem(int experience)
+
+        private ExperienceSystem(int experience)
         {
             _experience = experience;
         }
 
+        public static ExperienceSystem Instance(int experience)
+        {
+            if (_instance == null)
+            {
+                    _instance = new ExperienceSystem(experience);
+            }
+            return _instance;
+        }
         public int GetCurrentExperience()
         {
             return _experience;

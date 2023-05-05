@@ -54,7 +54,7 @@ namespace PlayerControls.PlayerControl
             Animator = GetComponent<Animator>();
             PlayerInput = GetComponent<PlayerInput>();
             NavMeshAgent = GetComponent<NavMeshAgent>();
-            
+
             movementSM = new StateMachine(); 
             standing = new StandingState(this, movementSM);
             combating = new CombatState(this, movementSM);
@@ -67,7 +67,7 @@ namespace PlayerControls.PlayerControl
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
             
             // get from ui
-            _experienceSystem = new ExperienceSystem(100);
+            _experienceSystem = ExperienceSystem.Instance(100);
             _experienceSystem.OnExperienceChanged += ExperienceSystem_OnExperienceChanged;
        }
 
@@ -100,6 +100,7 @@ namespace PlayerControls.PlayerControl
        
        private  void ExperienceSystem_OnExperienceChanged(object sender, System.EventArgs e)
        {
+           // update the UI
            _experienceSystem.GetCurrentExperience();
            Debug.Log("current exp: "+_experienceSystem.GetCurrentExperience());
        }
