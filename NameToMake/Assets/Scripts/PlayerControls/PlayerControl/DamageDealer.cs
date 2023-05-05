@@ -18,7 +18,7 @@ namespace PlayerControls.PlayerControl
             canDealDamage = false;
             hasDealtDamage = new List<GameObject>();
             // will be taken from Andrej's ui/ or add a listener to those values
-            weaponDamage = 40;
+            weaponDamage = 60;
         }
 
         // Update is called once per frame

@@ -1,3 +1,4 @@
+using System.Collections;
 using PlayerControls.PlayerControl.StateManagement;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,8 +9,6 @@ namespace PlayerControls.PlayerControl
 {
     public class Player : MonoBehaviour
     {
-        
-        private HealthSystem _healthSystem;
         [SerializeField]
         private HealthCanvas _healthCanvas;
         [SerializeField]
@@ -18,8 +17,7 @@ namespace PlayerControls.PlayerControl
         [Header("Controls")] 
         public float playerSpeed = 5.0f;
         public float rotationSpeed;
-
-        public static readonly int Speed = Animator.StringToHash("Speed");
+        
         
         [Header("Animation Smoothing")]
         [Range(0, 1)]
@@ -42,9 +40,14 @@ namespace PlayerControls.PlayerControl
        
        
        public NavMeshAgent NavMeshAgent;
+       
+       private HealthSystem _healthSystem;
+       private ExperienceSystem _experienceSystem;
 
        private static readonly int Die = Animator.StringToHash("Die");
        private static readonly int Damage = Animator.StringToHash("Damage");
+       public static readonly int Speed = Animator.StringToHash("Speed");
+       
        private void Start()
        {
            
@@ -58,9 +61,14 @@ namespace PlayerControls.PlayerControl
             attacking = new AttackState(this, movementSM);
             movementSM.Initialize(standing);
             
+            // get from ui
             _healthSystem = new HealthSystem(100);
             _healthCanvas.Setup(_healthSystem,_slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
+            
+            // get from ui
+            _experienceSystem = new ExperienceSystem(100);
+            _experienceSystem.OnExperienceChanged += ExperienceSystem_OnExperienceChanged;
        }
 
        public void TakeDamage(int damage)
@@ -76,13 +84,24 @@ namespace PlayerControls.PlayerControl
            {
                Animator.SetTrigger(Die);
                GetComponent<Collider>().enabled = false;
-               // add wait for 5 sec
-               //  Destroy(this.gameObject);
+               StartCoroutine(DeathPlayer());
            }
            else
            {
                Animator.SetTrigger(Damage);
            }
+       }
+       
+       IEnumerator DeathPlayer()
+       {
+           yield return new WaitForSeconds(5);
+           Destroy(this.gameObject);
+       }
+       
+       private  void ExperienceSystem_OnExperienceChanged(object sender, System.EventArgs e)
+       {
+           _experienceSystem.GetCurrentExperience();
+           Debug.Log("current exp: "+_experienceSystem.GetCurrentExperience());
        }
        public void Update()
        { 

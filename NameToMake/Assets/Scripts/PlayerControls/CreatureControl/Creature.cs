@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Threading.Tasks;
+using PlayerControls.PlayerControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,13 +17,16 @@ namespace PlayerControls.CreatureControl
         private Slider _slider;
         public Animator Animator;
 
-        private GameObject player;
+        private GameObject _player;
+        private ExperienceSystem _playerExperienceSystem;
         private static readonly int Die = Animator.StringToHash("die");
         private static readonly int Damage = Animator.StringToHash("damage");
         
+        
         private void Start()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            _player = GameObject.FindGameObjectWithTag("Player");
+           // _playerExperienceSystem = _player.GetComponent<ExperienceSystem>();
             // get from ui
             _healthSystem = new HealthSystem(100);
             _healthCanvas.Setup(_healthSystem,_slider);
@@ -34,15 +39,21 @@ namespace PlayerControls.CreatureControl
              
              if (healthValue <= 0)
              {
+                 // update in the UI
+                // _playerExperienceSystem.GetExperience(5);
                  Animator.SetTrigger(Die);
                  GetComponent<Collider>().enabled = false;
-                 // add wait for 5 sec
-                 //  Destroy(this.gameObject);
+                 StartCoroutine(DeathCreature());
              }
              else
              {
                  Animator.SetTrigger(Damage);
              }
+        }
+        IEnumerator DeathCreature()
+        {
+            yield return new WaitForSeconds(5);
+            Destroy(this.gameObject);
         }
 
         public void TakeDamage(int damage)

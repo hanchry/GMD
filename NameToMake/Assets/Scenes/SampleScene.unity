@@ -914,8 +914,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cddf4c3e45348c3a8366ea6bf9f448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponLength: 0
-  weaponDamage: 0
+  radius: 0
+  maxDistance: 0
 --- !u!1 &157594497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,7 +1604,7 @@ GameObject:
   - component: {fileID: 617048688}
   - component: {fileID: 617048689}
   m_Layer: 8
-  m_Name: Slider
+  m_Name: HealthSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3512,7 +3512,7 @@ GameObject:
   - component: {fileID: 1502079324}
   - component: {fileID: 1502079327}
   m_Layer: 8
-  m_Name: Health Canvas
+  m_Name: Stats Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3658,8 +3658,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cddf4c3e45348c3a8366ea6bf9f448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponLength: 0
-  weaponDamage: 0
+  radius: 0
+  maxDistance: 0
 --- !u!1 &1586879504
 GameObject:
   m_ObjectHideFlags: 0
