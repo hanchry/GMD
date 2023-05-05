@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PlayerControls.PlayerControl
 {
-    
+    // To be removed 
     public class LevelChangedEventArgs : EventArgs
     {
         public int NewLevel { get; set; }

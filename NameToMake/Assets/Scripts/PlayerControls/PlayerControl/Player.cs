@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
+using Objects;
 using PlayerControls.PlayerControl.StateManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 
 namespace PlayerControls.PlayerControl
@@ -13,6 +16,8 @@ namespace PlayerControls.PlayerControl
         private HealthCanvas _healthCanvas;
         [SerializeField]
         private Slider _slider;
+        [SerializeField]
+        private AtributesSkills _atributesSkills;
         
         [Header("Controls")] 
         public float playerSpeed = 5.0f;
@@ -42,7 +47,6 @@ namespace PlayerControls.PlayerControl
        public NavMeshAgent NavMeshAgent;
        
        private HealthSystem _healthSystem;
-       private ExperienceSystem _experienceSystem;
 
        private static readonly int Die = Animator.StringToHash("Die");
        private static readonly int Damage = Animator.StringToHash("Damage");
@@ -60,15 +64,12 @@ namespace PlayerControls.PlayerControl
             combating = new CombatState(this, movementSM);
             attacking = new AttackState(this, movementSM);
             movementSM.Initialize(standing);
-            
+
             // get from ui
-            _healthSystem = new HealthSystem(100);
+            _healthSystem = new HealthSystem(Convert.ToInt32(_atributesSkills.Hp));
             _healthCanvas.Setup(_healthSystem,_slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
             
-            // get from ui
-            _experienceSystem = ExperienceSystem.Instance(100);
-            _experienceSystem.OnExperienceChanged += ExperienceSystem_OnExperienceChanged;
        }
 
        public void TakeDamage(int damage)
@@ -98,12 +99,6 @@ namespace PlayerControls.PlayerControl
            Destroy(this.gameObject);
        }
        
-       private  void ExperienceSystem_OnExperienceChanged(object sender, System.EventArgs e)
-       {
-           // update the UI
-           _experienceSystem.GetCurrentExperience();
-           Debug.Log("current exp: "+_experienceSystem.GetCurrentExperience());
-       }
        public void Update()
        { 
            movementSM.currentState.HandleInput(); 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Objects;
 using PlayerControls.PlayerControl;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ namespace PlayerControls.CreatureControl
     public class Creature :MonoBehaviour
     {
         
+        [SerializeField]
+        private AtributesSkills _atributesSkills;
         private HealthSystem _healthSystem;
         [SerializeField]
         private HealthCanvas _healthCanvas;
@@ -18,7 +21,6 @@ namespace PlayerControls.CreatureControl
         public Animator Animator;
 
         private GameObject _player;
-        private ExperienceSystem _playerExperienceSystem;
         private static readonly int Die = Animator.StringToHash("die");
         private static readonly int Damage = Animator.StringToHash("damage");
         
@@ -26,7 +28,7 @@ namespace PlayerControls.CreatureControl
         private void Start()
         {
             _player = GameObject.FindGameObjectWithTag("Player");
-            _playerExperienceSystem = ExperienceSystem.Instance(4);
+            
             // get from ui
             _healthSystem = new HealthSystem(100);
             _healthCanvas.Setup(_healthSystem,_slider);
@@ -39,7 +41,9 @@ namespace PlayerControls.CreatureControl
              
              if (healthValue <= 0)
              {
-                 _playerExperienceSystem.GetExperience(5);
+                 // update the xp on death
+                 _atributesSkills.IncreaseXp(5); 
+                 // die
                  Animator.SetTrigger(Die);
                  GetComponent<Collider>().enabled = false;
                  StartCoroutine(DeathCreature());

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Objects
 {
-    public class AtributesSkills:MonoBehaviour
+    public class AtributesSkills : MonoBehaviour
     {
         
         private List<String> ConstiutionAttributes;
@@ -88,6 +88,11 @@ namespace Objects
                 return true;
             }
             return false;
+        }
+
+        public void IncreaseXp(int value)
+        {
+            Xp += value;
         }
         
         public int Xp
