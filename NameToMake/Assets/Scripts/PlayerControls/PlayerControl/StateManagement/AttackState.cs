@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PlayerControls;
 using PlayerControls.PlayerControl;
 using PlayerControls.PlayerControl.StateManagement;
+using Sound;
 using UnityEngine;
 
 public class AttackState : State
@@ -50,6 +51,7 @@ public class AttackState : State
         if (timePassed >= clipLength / clipSpeed && attack)
         {
             StateMachine.ChangeState(Player.attacking);
+            SoundManager.PlaySound(SoundManager.Sound.PlayerSwordSlash);
         }
         
         if (timePassed >= clipLength / clipSpeed)

@@ -1,3 +1,4 @@
+using Sound;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -66,6 +67,7 @@ namespace PlayerControls.PlayerControl.StateManagement
             {
                 Player.Animator.SetTrigger(Attack);
                 StateMachine.ChangeState(Player.attacking);
+                SoundManager.PlaySound(SoundManager.Sound.PlayerSwordSlash);
             }
         }
         public void OnMovePerformed(InputAction.CallbackContext context)
