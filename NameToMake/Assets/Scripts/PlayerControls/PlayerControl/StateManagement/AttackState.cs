@@ -26,10 +26,8 @@ public class AttackState : State
     {
         base.Enter();
         attack = false;
-        Player.Animator.applyRootMotion = true;
         timePassed = 0f;
         Player.Animator.SetTrigger(Attack);
-      //  Player.Animator.SetFloat(Speed,0f );
     }
 
     public override void HandleInput()
@@ -64,7 +62,6 @@ public class AttackState : State
     public override void Exit()
     {
         base.Exit();
-       // Player.Animator.applyRootMotion = true;
     }
     
 }

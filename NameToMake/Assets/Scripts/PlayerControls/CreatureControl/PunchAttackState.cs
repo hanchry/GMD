@@ -21,7 +21,7 @@ namespace PlayerControls.CreatureControl
             Transform transform;
             (transform = animator.transform).LookAt(player);
             float distance = Vector3.Distance(player.position, transform.position);
-            if (distance > 6)
+            if (distance > 2.5f)
             {
                 animator.SetBool(IsAttacking,false);
             }

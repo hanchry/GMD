@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Objects;
 using PlayerControls.CreatureControl;
+using Unity.Properties;
 using UnityEngine;
 
 namespace PlayerControls.PlayerControl
@@ -12,13 +14,16 @@ namespace PlayerControls.PlayerControl
 
         [SerializeField] private float weaponLength;
         [SerializeField] private int weaponDamage;
-    
+        [SerializeField] private CombatValues _combatValues;
         void Start()
         {
             canDealDamage = false;
             hasDealtDamage = new List<GameObject>();
+            
+            // Will be changed when 
             // will be taken from Andrej's ui/ or add a listener to those values
-            weaponDamage = 40;
+            weaponDamage = _combatValues.DamageGiven().Value;
+            Debug.Log("weapon damage: "+weaponDamage);
         }
 
         // Update is called once per frame
@@ -32,7 +37,6 @@ namespace PlayerControls.PlayerControl
                 {
                     if (hit.transform.TryGetComponent(out Creature creature) && !hasDealtDamage.Contains(hit.transform.gameObject))
                     {
-                        Debug.Log("damage");
                         creature.TakeDamage(weaponDamage);
                         hasDealtDamage.Add(hit.transform.gameObject);
                     }
@@ -56,6 +60,9 @@ namespace PlayerControls.PlayerControl
             var transform1 = transform;
             var position = transform1.position;
             Gizmos.DrawLine(position, position - transform1.up * weaponLength);
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(transform.position, -transform.up);
         }
     }
 }

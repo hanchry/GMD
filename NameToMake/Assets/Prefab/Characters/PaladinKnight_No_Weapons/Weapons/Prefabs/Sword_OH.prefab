@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3133388446073263577}
   - component: {fileID: 1153514278736298051}
+  - component: {fileID: 2535007449837241372}
   m_Layer: 0
   m_Name: DamageDealer
   m_TagString: Untagged
@@ -108,14 +109,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8713655199705432660}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 1.088}
-  m_LocalScale: {x: 1, y: 1, z: 5.34375}
+  m_LocalRotation: {x: 0.77667254, y: 0.027122071, z: -0.021963023, w: 0.62893707}
+  m_LocalPosition: {x: 0, y: 0, z: 1.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4145553361310044}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 102, y: 0, z: -4}
 --- !u!114 &1153514278736298051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,5 +129,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7c78162d9a04b34af410c463173928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponLength: 1.2
+  weaponLength: 1.6
   weaponDamage: 1
+  _combatValues: {fileID: 2535007449837241372}
+--- !u!114 &2535007449837241372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713655199705432660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe174a267fc9d445a3c022c9bab49c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
