@@ -18,6 +18,7 @@ public class CombatValues : MonoBehaviour
         
         return damage;
     }
+    
     public Damage DamageReceived(Damage damage)
     {
         bool block = Block();

@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3133388446073263577}
   - component: {fileID: 1153514278736298051}
+  - component: {fileID: 2535007449837241372}
   m_Layer: 0
   m_Name: DamageDealer
   m_TagString: Untagged
@@ -130,3 +131,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponLength: 1.6
   weaponDamage: 1
+  _combatValues: {fileID: 2535007449837241372}
+--- !u!114 &2535007449837241372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713655199705432660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe174a267fc9d445a3c022c9bab49c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

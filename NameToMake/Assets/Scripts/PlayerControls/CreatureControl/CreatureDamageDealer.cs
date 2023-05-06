@@ -14,7 +14,7 @@ namespace PlayerControls.CreatureControl
         private bool canDealDamage;
         private bool hasDealtDamage;
 
-        private int weaponDamage = 30;
+        private int weaponDamage = 10;
         
         // Start is called before the first frame update
         void Start()
@@ -39,7 +39,7 @@ namespace PlayerControls.CreatureControl
                     if (hit.transform.TryGetComponent(out Player player))
                     {
                         Debug.Log("damage");
-                        player.TakeDamage(weaponDamage);
+                     //   player.TakeDamage(weaponDamage);
                         
                         hasDealtDamage = true;
                     }
