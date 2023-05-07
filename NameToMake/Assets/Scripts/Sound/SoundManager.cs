@@ -10,7 +10,7 @@ namespace Sound
         private static float _characterEffectsVolume = 0.1f;
         public static event Action<float> OnGameMusicVolumeChanged;
         public static event Action<float> OnCharacterEffectsVolumeChanged;
-        
+
         public enum CharacterSound
         {
             PlayerSwordSlash, 

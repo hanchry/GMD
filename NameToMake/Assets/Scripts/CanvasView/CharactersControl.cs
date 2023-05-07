@@ -33,6 +33,7 @@ namespace DefaultNamespace
 
         public void OnClickPlay()
         {
+            Destroy(GameObject.Find("Sound"));
             SceneManager.LoadScene("SampleScene");
         }
 
