@@ -1,3 +1,4 @@
+using Objects;
 using PlayerControls.PlayerControl;
 using Sound;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace PlayerControls.CreatureControl
     public class CreatureDamageDealer : MonoBehaviour
     {
         
+        [SerializeField] 
+        private CombatValues _combatValues;
         [SerializeField]
         private float radius;
         [SerializeField]
@@ -14,8 +17,7 @@ namespace PlayerControls.CreatureControl
 
         private bool canDealDamage;
         private bool hasDealtDamage;
-
-        private int weaponDamage = 40;
+        private int weaponDamage;
         
         // Start is called before the first frame update
         void Start()
@@ -24,6 +26,8 @@ namespace PlayerControls.CreatureControl
             hasDealtDamage = false;
             radius = 0.5f;
             maxDistance = 3f;
+            weaponDamage = _combatValues.DamageGiven().Value;
+            Debug.Log(weaponDamage);
         }
 
         // Update is called once per frame
@@ -38,8 +42,8 @@ namespace PlayerControls.CreatureControl
                 if (Physics.SphereCast(origin, radius,direction, out hit, maxDistance, layerMask))
                 {
                     if (hit.transform.TryGetComponent(out Player player))
-                    {
-                        //  player.TakeDamage(weaponDamage);
+                    { 
+                         player.TakeDamage(weaponDamage);
                          hasDealtDamage = true;
                          SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerDamage, player.transform.position);
                     }

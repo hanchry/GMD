@@ -39,7 +39,6 @@ namespace PlayerControls.PlayerControl
                     { 
                         var position = creature.transform.position;
                         creature.TakeDamage(weaponDamage);
-                       
                         SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerSwordMetalHit, position);
                         hasDealtDamage.Add(hit.transform.gameObject);
                         SoundManager.PlayCharacterSound(SoundManager.CharacterSound.CreatureDamage,position);
