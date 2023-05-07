@@ -48,6 +48,7 @@ namespace PlayerControls.PlayerControl
        [FormerlySerializedAs("NavMeshAgent")] public NavMeshAgent navMeshAgent;
        
        private HealthSystem _healthSystem;
+       public bool isAlive;
 
        private static readonly int Die = Animator.StringToHash("Die");
        private static readonly int Damage = Animator.StringToHash("Damage");
@@ -66,12 +67,12 @@ namespace PlayerControls.PlayerControl
             Combating = new CombatState(this, MovementSm);
             Attacking = new AttackState(this, MovementSm);
             MovementSm.Initialize(Standing);
-
-            // get from ui
+            
             _healthSystem = new HealthSystem(Convert.ToInt32(attributesSkills.Hp));
             healthCanvas.Setup(_healthSystem,slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
-            
+            isAlive = true;
+
        }
 
        private static Player Instance { get; set; }
@@ -100,7 +101,9 @@ namespace PlayerControls.PlayerControl
            if (healthValue <= 0)
            {
                animator.SetTrigger(Die);
+               
                GetComponent<Collider>().enabled = false;
+               isAlive = false;
                SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerDying, transform.position);
                StartCoroutine(DeathPlayer());
            }
