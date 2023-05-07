@@ -9,7 +9,7 @@ namespace Objects
         private string _characterName;
         
         private static Items _instance;
-        
+
         public static Items Instance
         {
             get
@@ -23,7 +23,7 @@ namespace Objects
                         _instance = singleton.AddComponent<Items>();
                         singleton.name = typeof(Items).ToString();
                     
-                        // DontDestroyOnLoad(singleton);
+                        DontDestroyOnLoad(singleton);
                     }
                 }
                 return _instance;

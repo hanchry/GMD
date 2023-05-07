@@ -38,7 +38,7 @@ namespace PlayerControls.CreatureControl
                 {
                     if (hit.transform.TryGetComponent(out Player player))
                     {
-                        Debug.Log("damage");
+                        // Debug.Log("damage");
                      //   player.TakeDamage(weaponDamage);
                         
                         hasDealtDamage = true;

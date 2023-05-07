@@ -12,23 +12,30 @@ public class CombatValues : MonoBehaviour
 
     public Damage DamageGiven()
     {
-        int critical = Critic() ? 2 : 1;
+        String weaponName = Items.Instance.GetWeapon1();
         Damage damage = new Damage();
-        damage.Value = DamageFromWeapon(1, 10) * critical;
-        damage.Type = DamageType.Heavy;
+        
+        damage = BaseDamage(damage, weaponName);
+        
+        int critical = Critic() ? 2 : 1;
+        damage.Value *= critical;
         
         
         return damage;
     }
-    
+
     public Damage DamageReceived(Damage damage)
     {
-        bool block = Block();
-        bool dodge = Dodge();
-        if (block || dodge)
+
+        if (damage.Type == DamageType.Heavy && Block())
         {
+            damage.Type = DamageType.Block;
             damage.Value = 0;
-            damage.Type = block ? DamageType.Block : DamageType.Dodge;
+        }
+        else if (Dodge())
+        {
+            damage.Type = DamageType.Dodge;
+            damage.Value = 0;
         }
         return damage;
     }
@@ -40,10 +47,45 @@ public class CombatValues : MonoBehaviour
     }
 
 
+
+    private Damage BaseDamage(Damage damage,String weaponName)
+    {
+        if (weaponName != "")
+        {
+            GameObject weaponPrefab = Resources.Load<GameObject>("Prefabs/UI/Items/" + weaponName);
+            WeaponLogic weapon = weaponPrefab.GetComponent<WeaponLogic>();
+            if (weapon.WeaponType == WeaponType.Heavy)
+            {
+                damage.Value = DamageFromWeapon(weapon.MinDamage, weapon.MaxDamage) * (_atributesSkills.Strength / 2);
+                damage.Type = DamageType.Heavy;
+            }
+            else
+            {
+                damage.Value = DamageFromWeapon(weapon.MinDamage, weapon.MaxDamage) * (_atributesSkills.Dexterity / 2);
+                damage.Type = DamageType.Light;
+            }
+        }
+        else
+        {
+            if (_atributesSkills.Strength > _atributesSkills.Dexterity)
+            {
+                damage.Value = DamageFromWeapon(1, 5) * (_atributesSkills.Strength / 2);
+                damage.Type = DamageType.Heavy;
+            }
+            else
+            {
+                damage.Value = DamageFromWeapon(1, 5) * (_atributesSkills.Dexterity / 2);
+                damage.Type = DamageType.Light;
+            }
+        }
+
+        return damage;
+    }
+
     private bool Block()
     {
         int chance = UnityEngine.Random.Range(0, 100);
-        if (chance <= 20)
+        if (chance <= _atributesSkills.Block)
         {
             return true;
         }
@@ -52,7 +94,7 @@ public class CombatValues : MonoBehaviour
     private bool Dodge()
     {
         int chance = UnityEngine.Random.Range(0, 100);
-        if (chance <= 20)
+        if (chance <= _atributesSkills.Dodge)
         {
             return true;
         }
@@ -61,7 +103,7 @@ public class CombatValues : MonoBehaviour
     private bool Critic()
     {
         int chance = UnityEngine.Random.Range(0, 100);
-        if (chance <= 20)
+        if (chance <= _atributesSkills.Luck)
         {
             return true;
         }
