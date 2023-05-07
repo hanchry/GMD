@@ -52,10 +52,11 @@ namespace PlayerControls.PlayerControl
        private static readonly int Damage = Animator.StringToHash("Damage");
        public static readonly int Speed = Animator.StringToHash("Speed");
        
+       
        private void Start()
        {
-           
-            Animator = GetComponent<Animator>();
+
+           Animator = GetComponent<Animator>();
             PlayerInput = GetComponent<PlayerInput>();
             NavMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -70,6 +71,20 @@ namespace PlayerControls.PlayerControl
             _healthCanvas.Setup(_healthSystem,_slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
             
+       }
+
+       private static Player Instance { get; set; }
+       private void Awake()
+       {
+           if (Instance == null)
+           {
+               Instance = this;
+               DontDestroyOnLoad(gameObject);
+           }
+           else
+           {
+               Destroy(gameObject);
+           }
        }
 
        public void TakeDamage(int damage)

@@ -33,17 +33,13 @@ public class NavigationControl : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         GameObject obj = GameObject.Find("PlayerName");
         obj.GetComponent<TextMeshProUGUI>().text = Characters.Instance.GetCurrentCharacterName();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    
 
     private string CurrentScene()
     {

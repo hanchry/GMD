@@ -31,6 +31,11 @@ namespace Objects
             {
                 Items.Instance.AddInventoryItem(itemName);
             }
+            
+            if(Items.Instance.GetWeapon1().Equals(itemName))
+            {
+                Items.Instance.SetWeapon1("");
+            }
         }
     }
 }

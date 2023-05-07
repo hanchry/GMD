@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class CombatValues : MonoBehaviour
 {
+    [SerializeField]
+    private AtributesSkills _atributesSkills;
     
 
     public Damage DamageGiven()
@@ -30,10 +32,14 @@ public class CombatValues : MonoBehaviour
         }
         return damage;
     }
-    
-    
-    
-    
+
+    private void Start()
+    {
+        // Debug.Log(Items.Instance.Weapon1);
+        
+    }
+
+
     private bool Block()
     {
         int chance = UnityEngine.Random.Range(0, 100);

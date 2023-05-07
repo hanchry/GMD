@@ -23,7 +23,7 @@ namespace PlayerControls.PlayerControl
             // Will be changed when 
             // will be taken from Andrej's ui/ or add a listener to those values
             weaponDamage = _combatValues.DamageGiven().Value;
-            Debug.Log("weapon damage: "+weaponDamage);
+            // Debug.Log("weapon damage: "+weaponDamage);
         }
 
         // Update is called once per frame
