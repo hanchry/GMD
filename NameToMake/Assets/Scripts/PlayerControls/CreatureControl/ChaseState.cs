@@ -1,3 +1,4 @@
+using PlayerControls.PlayerControl;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +8,8 @@ namespace PlayerControls.CreatureControl
     {
         private NavMeshAgent agent;
 
-        private Transform player;
+        private GameObject player;
+        private Player playerScriptComponent;
     
         private static readonly int IsChasing = Animator.StringToHash("IsChasing");
     
@@ -17,24 +19,29 @@ namespace PlayerControls.CreatureControl
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             agent = animator.GetComponent<NavMeshAgent>();
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            player = GameObject.FindGameObjectWithTag("Player");
+            playerScriptComponent = player.GetComponent<Player>();
             agent.speed = 3.5f;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            var position = player.position;
-            agent.SetDestination(position);
-            float distance = Vector3.Distance(position, animator.transform.position);
-            if (distance > 13)
+            if (playerScriptComponent.isAlive)
             {
-                animator.SetBool(IsChasing,false);
+                var position = player.transform.position;
+                agent.SetDestination(position);
+                float distance = Vector3.Distance(position, animator.transform.position);
+                if (distance > 13)
+                {
+                    animator.SetBool(IsChasing,false);
+                }
+                if (distance < 2.5f)
+                {
+                    animator.SetBool(IsAttacking,true);
+                }
             }
-            if (distance < 2.5f)
-            {
-                animator.SetBool(IsAttacking,true);
-            }
+            
         }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
