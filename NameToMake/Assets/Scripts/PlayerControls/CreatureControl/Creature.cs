@@ -41,7 +41,7 @@ namespace PlayerControls.CreatureControl
              float healthValue = _healthSystem.GetHealthPercent();
              
              if (healthValue <= 0)
-             {
+             { 
                  _atributesSkills.IncreaseXp(5);
                  Animator.SetTrigger(Die);
                  GetComponent<Collider>().enabled = false;
