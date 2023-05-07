@@ -11,10 +11,21 @@ namespace CameraControls
         private float followOffsetMin = 20f;
         private float followOffsetMax = 60f;
         private Vector3 followOffset;
+        
+        public static ZoomController Instance { get; private set; }
 
         private void Awake()
         {
             followOffset = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset;
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
         
         // Update is called once per frame

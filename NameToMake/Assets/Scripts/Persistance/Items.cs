@@ -9,7 +9,7 @@ namespace Objects
         private string _characterName;
         
         private static Items _instance;
-        
+
         public static Items Instance
         {
             get
@@ -23,14 +23,16 @@ namespace Objects
                         _instance = singleton.AddComponent<Items>();
                         singleton.name = typeof(Items).ToString();
                     
-                        // DontDestroyOnLoad(singleton);
+                        DontDestroyOnLoad(singleton);
                     }
                 }
                 return _instance;
             }
         }
+        
         public string[] GetInventoryItems()
         {
+            String[] items = PlayerPrefs.GetString(_characterName+"InventoryItems").Split(',');
             return PlayerPrefs.GetString(_characterName+"InventoryItems").Split(',');
         }
         public void AddInventoryItem(string name)
@@ -46,21 +48,24 @@ namespace Objects
             PlayerPrefs.SetString(_characterName+"InventoryItems", items);
         }
 
-        public string Weapon1
+        public string GetWeapon1()
         {
-            get => PlayerPrefs.GetString(_characterName+"EquiptWeapon1");
-            set => PlayerPrefs.SetString(_characterName+"EquiptWeapon1", value);
+            return PlayerPrefs.GetString(_characterName + "EquiptWeapon1"); 
+        }
+        public void SetWeapon1(string name)
+        {
+            PlayerPrefs.SetString(_characterName + "EquiptWeapon1", name);
         }
 
         private void Start()
         {
-            _characterName = Characters.Instance.GetCurrentCharacterName();
+            _characterName = Characters.Instance.GetCurrentCharacterName(); 
             AddBeginningItems();
         }
 
         private void AddBeginningItems()
         {
-            if(GetInventoryItems().Length- 1 == 0)
+            if(GetInventoryItems().Length - 1 <= 0 && GetWeapon1() == "")
             {
                 AddInventoryItem("SwordLight");
             }

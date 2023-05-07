@@ -9,6 +9,21 @@ public class CameraManager : MonoBehaviour
     public Camera mainCamera;
 
     private bool usingVirtualCam = true;
+    
+    private static CameraManager Instance { get; set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Update is called once per frame
     void Update()

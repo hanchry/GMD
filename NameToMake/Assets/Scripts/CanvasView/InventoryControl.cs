@@ -8,15 +8,21 @@ namespace CanvasView
     {
         void Start()
         {
-            SetupInventory();
-            SetupEquiptWeapon1();
+            // Invoke("DuplicateFix", 0.00001f);
+            Invoke("SetupInventory", 0.00001f);
+            Invoke("SetupEquiptWeapon1", 0.00001f);
         }
 
+        private void DuplicateFix()
+        {
+            Items.Instance.RemoveInventoryItem("SwordLight");
+        }
         private void SetupInventory()
         {
+            Debug.Log("SetupInventory");
             foreach (var item in Items.Instance.GetInventoryItems())
             {
-                if (item != "")
+                if (!String.IsNullOrEmpty(item))
                 {
                     if (GameObject.Find(item+"(Clone)") != null)
                         Destroy(GameObject.Find(item+"(Clone)"));
@@ -34,11 +40,16 @@ namespace CanvasView
 
         private void SetupEquiptWeapon1()
         {
-            string item = Items.Instance.Weapon1;
-            GameObject placeHolder = GameObject.Find("Weapon1");
-            GameObject uiItem = Instantiate(Resources.Load("Prefabs/UI/Items/" + item)) as GameObject;
-            uiItem.transform.SetParent(placeHolder.transform, false);
-            uiItem.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+            string item = Items.Instance.GetWeapon1();
+            item = Items.Instance.GetWeapon1();
+            Debug.Log(item);
+            if (!String.IsNullOrEmpty(item))
+            {
+                GameObject placeHolder = GameObject.Find("Weapon1");
+                GameObject uiItem = Instantiate(Resources.Load("Prefabs/UI/Items/" + item)) as GameObject;
+                uiItem.transform.SetParent(placeHolder.transform, false);
+                uiItem.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+            }
         }
         
         private GameObject FindPlaceHolderInventory()

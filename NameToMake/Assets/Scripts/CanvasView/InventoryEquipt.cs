@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,8 +22,11 @@ namespace Objects
         public void OnDrop(PointerEventData eventData)
         {
             GameObject droppedObject = eventData.pointerDrag;
-            if (IsItemTypeEqualToSlotType(droppedObject))
+            
+            if (IsItemCorrect(droppedObject.name))
             {
+                
+            
                 DragableObject dragableObject = droppedObject.GetComponent<DragableObject>(); 
                 if (transform.childCount > 1)
                 {
@@ -36,23 +40,30 @@ namespace Objects
             }
         }
 
-        private bool IsItemTypeEqualToSlotType(GameObject droppedObject)
+        private bool IsItemCorrect(String name)
         {
+            name = name.Replace("(Clone)", "");
+            
             foreach (var item in items)
             {
-                if (transform.name.Contains(item.Key))
+                if (item.Key.Equals(transform.name))
                 {
-                    if (droppedObject.GetComponent(item.Value) != null)
+                    GameObject uiItem = Instantiate(Resources.Load("Prefabs/UI/Items/" + name)) as GameObject;
+                    if (uiItem.GetComponent(item.Value) != null)
                     {
-                        string itemName = droppedObject.name.Replace("(Clone)", "");
-                        Items.Instance.GetType().GetProperty(item.Key)?.SetValue(Items.Instance, itemName);
-                        Items.Instance.RemoveInventoryItem(itemName);
-                        
+                        Items.Instance.RemoveInventoryItem(name);
+                        Items.Instance.SetWeapon1(name);
                         return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
             }
             return false;
         }
+        
+        
     }
 }

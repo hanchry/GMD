@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using Objects.Objects;
 using UnityEngine;
 
 namespace Objects
 {
     public class AtributesSkills : MonoBehaviour
     {
-        
+        [SerializeField]
+        private NPC _npc; 
+            
         private List<String> ConstiutionAttributes;
         private List<String> StrengthAttrubutes;
         private List<String> DexterityAttributes;
@@ -16,7 +19,6 @@ namespace Objects
 
         void Start()
         {
-            Debug.Log("AtributesSkills Start");
             ConstiutionAttributes = new List<string>(){"Hp"};
             StrengthAttrubutes = new List<string>(){"HeavyAttack", "HeavyDefense","Block"};
             DexterityAttributes = new List<string>(){"Stamina", "LightAttack", "LightDefense", "Dodge"};
@@ -29,26 +31,40 @@ namespace Objects
 
         public int Constitution
         {
-            get => PlayerPrefs.GetInt(_characterName+",Constitution", 1);
+            get
+            {
+                return _npc == null ?  PlayerPrefs.GetInt(_characterName + ",Constitution", 1) : _npc.constitution;
+            }
             set => PlayerPrefs.SetInt(_characterName+",Constitution", value);
         }
 
         public int Strength
         {
-            get => PlayerPrefs.GetInt(_characterName+",Strength", 1);
+            get
+            {
+                return _npc == null ?  PlayerPrefs.GetInt(_characterName + ",Strength", 1) : _npc.strength;
+            }
             set => PlayerPrefs.SetInt(_characterName+",Strength", value);
         }
+
         public int Dexterity
         {
-            get => PlayerPrefs.GetInt(_characterName+",Dexterity", 1);
+            get
+            {
+                return _npc == null ?  PlayerPrefs.GetInt(_characterName + ",Dexterity", 1) : _npc.dexterity;
+            }
             set => PlayerPrefs.SetInt(_characterName+",Dexterity", value);
         }
+
         public int Luck
         {
-            get => PlayerPrefs.GetInt(_characterName+",Luck", 1);
+            get
+            {
+                return _npc == null ?  PlayerPrefs.GetInt(_characterName + ",Luck", 1) : _npc.luck;
+            }
             set => PlayerPrefs.SetInt(_characterName+",Luck", value);
         }
-        
+
         public bool IncreaseConstitution()
         {
             if (Xp >= ConstitutionXpPrice)

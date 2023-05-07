@@ -53,6 +53,7 @@ namespace PlayerControls.PlayerControl
        private static readonly int Damage = Animator.StringToHash("Damage");
        public static readonly int Speed = Animator.StringToHash("Speed");
        
+       
        private void Start()
        {
            
@@ -71,6 +72,20 @@ namespace PlayerControls.PlayerControl
             healthCanvas.Setup(_healthSystem,slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
             
+       }
+
+       private static Player Instance { get; set; }
+       private void Awake()
+       {
+           if (Instance == null)
+           {
+               Instance = this;
+               DontDestroyOnLoad(gameObject);
+           }
+           else
+           {
+               Destroy(gameObject);
+           }
        }
 
        public void TakeDamage(int damage)
