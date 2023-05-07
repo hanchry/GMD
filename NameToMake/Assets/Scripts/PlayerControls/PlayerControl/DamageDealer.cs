@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Objects;
 using PlayerControls.CreatureControl;
+using Sound;
 using Unity.Properties;
 using UnityEngine;
 
@@ -23,7 +24,6 @@ namespace PlayerControls.PlayerControl
             // Will be changed when 
             // will be taken from Andrej's ui/ or add a listener to those values
             weaponDamage = _combatValues.DamageGiven().Value;
-            Debug.Log("weapon damage: "+weaponDamage);
         }
 
         // Update is called once per frame
@@ -36,9 +36,13 @@ namespace PlayerControls.PlayerControl
                 if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, layerMask))
                 {
                     if (hit.transform.TryGetComponent(out Creature creature) && !hasDealtDamage.Contains(hit.transform.gameObject))
-                    {
+                    { 
+                        var position = creature.transform.position;
                         creature.TakeDamage(weaponDamage);
+                       
+                        SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerSwordMetalHit, position);
                         hasDealtDamage.Add(hit.transform.gameObject);
+                        SoundManager.PlayCharacterSound(SoundManager.CharacterSound.CreatureDamage,position);
                     }
                 }
             }

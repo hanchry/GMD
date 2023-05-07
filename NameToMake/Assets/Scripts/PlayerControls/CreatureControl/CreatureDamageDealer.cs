@@ -1,4 +1,5 @@
 using PlayerControls.PlayerControl;
+using Sound;
 using UnityEngine;
 
 namespace PlayerControls.CreatureControl
@@ -14,7 +15,7 @@ namespace PlayerControls.CreatureControl
         private bool canDealDamage;
         private bool hasDealtDamage;
 
-        private int weaponDamage = 10;
+        private int weaponDamage = 40;
         
         // Start is called before the first frame update
         void Start()
@@ -38,10 +39,9 @@ namespace PlayerControls.CreatureControl
                 {
                     if (hit.transform.TryGetComponent(out Player player))
                     {
-                        Debug.Log("damage");
-                     //   player.TakeDamage(weaponDamage);
-                        
-                        hasDealtDamage = true;
+                        //  player.TakeDamage(weaponDamage);
+                         hasDealtDamage = true;
+                         SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerDamage, player.transform.position);
                     }
                 }
             }

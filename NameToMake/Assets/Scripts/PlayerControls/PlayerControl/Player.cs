@@ -2,22 +2,23 @@ using System;
 using System.Collections;
 using Objects;
 using PlayerControls.PlayerControl.StateManagement;
+using Sound;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace PlayerControls.PlayerControl
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField]
-        private HealthCanvas _healthCanvas;
-        [SerializeField]
-        private Slider _slider;
-        [SerializeField]
-        private AtributesSkills _atributesSkills;
+        [FormerlySerializedAs("_healthCanvas")] [SerializeField]
+        private HealthCanvas healthCanvas;
+        [FormerlySerializedAs("_slider")] [SerializeField]
+        private Slider slider;
+        [FormerlySerializedAs("_atributesSkills")] [SerializeField]
+        private AtributesSkills attributesSkills;
         
         [Header("Controls")] 
         public float playerSpeed = 5.0f;
@@ -32,19 +33,19 @@ namespace PlayerControls.PlayerControl
         [Range(0, 1)]
         public float velocityDampTime = 0.9f;
         
-        public StateMachine movementSM;
-        public StandingState standing;
-        public CombatState combating;
-        public AttackState attacking;
+        public StateMachine MovementSm;
+        public StandingState Standing;
+        public CombatState Combating;
+        public AttackState Attacking;
 
 
-       [HideInInspector] 
-       public Animator Animator;
-       [HideInInspector] 
-       public PlayerInput PlayerInput;
+       [FormerlySerializedAs("Animator")] [HideInInspector] 
+       public Animator animator;
+       [FormerlySerializedAs("PlayerInput")] [HideInInspector] 
+       public PlayerInput playerInput;
        
        
-       public NavMeshAgent NavMeshAgent;
+       [FormerlySerializedAs("NavMeshAgent")] public NavMeshAgent navMeshAgent;
        
        private HealthSystem _healthSystem;
 
@@ -55,41 +56,42 @@ namespace PlayerControls.PlayerControl
        private void Start()
        {
            
-            Animator = GetComponent<Animator>();
-            PlayerInput = GetComponent<PlayerInput>();
-            NavMeshAgent = GetComponent<NavMeshAgent>();
+            animator = GetComponent<Animator>();
+            playerInput = GetComponent<PlayerInput>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
 
-            movementSM = new StateMachine(); 
-            standing = new StandingState(this, movementSM);
-            combating = new CombatState(this, movementSM);
-            attacking = new AttackState(this, movementSM);
-            movementSM.Initialize(standing);
+            MovementSm = new StateMachine(); 
+            Standing = new StandingState(this, MovementSm);
+            Combating = new CombatState(this, MovementSm);
+            Attacking = new AttackState(this, MovementSm);
+            MovementSm.Initialize(Standing);
 
             // get from ui
-            _healthSystem = new HealthSystem(Convert.ToInt32(_atributesSkills.Hp));
-            _healthCanvas.Setup(_healthSystem,_slider);
+            _healthSystem = new HealthSystem(Convert.ToInt32(attributesSkills.Hp));
+            healthCanvas.Setup(_healthSystem,slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
             
        }
 
        public void TakeDamage(int damage)
        {
-           this._healthSystem.Damage(damage);
+           _healthSystem.Damage(damage);
        }
        
-       private  void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)
+       private  void HealthSystem_OnHealthChanged(object sender, EventArgs e)
        {
            float healthValue = _healthSystem.GetHealthPercent();
              
            if (healthValue <= 0)
            {
-               Animator.SetTrigger(Die);
+               animator.SetTrigger(Die);
                GetComponent<Collider>().enabled = false;
+               SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerDying, transform.position);
                StartCoroutine(DeathPlayer());
            }
            else
            {
-               Animator.SetTrigger(Damage);
+               animator.SetTrigger(Damage);
            }
        }
        
@@ -101,12 +103,12 @@ namespace PlayerControls.PlayerControl
        
        public void Update()
        { 
-           movementSM.currentState.HandleInput(); 
-           movementSM.currentState.LogicUpdate();
+           MovementSm.currentState.HandleInput(); 
+           MovementSm.currentState.LogicUpdate();
        }
        public void FixedUpdate()
        {
-           movementSM.currentState.PhysicsUpdate();
+           MovementSm.currentState.PhysicsUpdate();
        }
        
     }

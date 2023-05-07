@@ -19,9 +19,9 @@ namespace PlayerControls.PlayerControl.StateManagement
             Player = _player;
             StateMachine = _stateMachine;
 
-            moveAction = _player.PlayerInput.actions["Move"];
-            drawWeaponAction= _player.PlayerInput.actions["DrawWeapon"];
-            attackAction = _player.PlayerInput.actions["Attack"];
+            moveAction = _player.playerInput.actions["Move"];
+            drawWeaponAction= _player.playerInput.actions["DrawWeapon"];
+            attackAction = _player.playerInput.actions["Attack"];
         }
 
         public virtual void Enter()

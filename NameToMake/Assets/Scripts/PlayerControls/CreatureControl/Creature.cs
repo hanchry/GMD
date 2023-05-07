@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using Objects;
 using PlayerControls.PlayerControl;
+using Sound;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,11 +42,10 @@ namespace PlayerControls.CreatureControl
              
              if (healthValue <= 0)
              {
-                 // update the xp on death
-                 _atributesSkills.IncreaseXp(5); 
-                 // die
+                 _atributesSkills.IncreaseXp(5);
                  Animator.SetTrigger(Die);
                  GetComponent<Collider>().enabled = false;
+                 SoundManager.PlayCharacterSound(SoundManager.CharacterSound.CreatureDying, transform.position);
                  StartCoroutine(DeathCreature());
              }
              else

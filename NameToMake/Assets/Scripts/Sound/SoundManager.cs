@@ -1,80 +1,156 @@
+using System;
 using UnityEngine;
 
 namespace Sound
 {
-    public static class SoundManager 
+    public static class SoundManager
     {
 
-        public enum Sound
+        private static float _gameMusicVolume = 0.5f;
+        private static float _characterEffectsVolume = 0.1f;
+        public static event Action<float> OnGameMusicVolumeChanged;
+        public static event Action<float> OnCharacterEffectsVolumeChanged;
+        
+        public enum CharacterSound
         {
-            GameRegisteringSoundtrack,
-            GameBackgroundMusic,
-            ButtonClick,
-            PlayerMove,
-            PlayerSwordSlash,
-            PlayerSwordHit,
+            PlayerSwordSlash, 
+            PlayerSwordMetalHit,
             PlayerDying,
             PlayerDrawSword,
             PlayerBlockHit,
             PlayerDamage,
-            CreatureGrunting,
             CreatureRoaring,
             CreatureDying,
-            CreatureAttack,
             CreatureDamage
-            
         }
-        public enum GameSounds
+
+        public enum GameSound
         {
             GameRegisteringSoundtrack,
             GameBackgroundMusic,
-            ButtonClick
-        }
-        public enum PlayerSounds
-        {
-            PlayerMove,
-            PlayerSwordSlash,
-            PLayerSwordHit,
-            PlayerDying,
-            PlayerDrawSword,
-            PlayerBlockHit,
-            PlayerDamage
-        }
-        
-        public enum CreatureSounds
-        {
-            CreatureGrunting,
-            CreatureRoaring,
-            CreatureDying,
-            CreatureAttack,
-            CreatureDamage
+            ButtonClick,
+            ButtonHover,
         }
 
-        public static void PlaySound(Sound sound)
+        public static void PlayGameSound(GameSound gameSound)
         {
             GameObject soundGameObject = new GameObject("Sound");
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-            audioSource.PlayOneShot(GetAudioClip(sound));
+            audioSource.clip = GetGameAudioClip(gameSound);
+            audioSource.volume = _gameMusicVolume;
+            audioSource.Play();
         }
-        // public static void PlaySound()
-        // {
-        //     GameObject soundGameObject = new GameObject("Sound");
-        //     AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-        //    // audioSource.PlayDelayed(0.2f);
-        //    // audioSource.PlayOneShot(GetAudioClip(sound));
-        // }
-
-        private static AudioClip GetAudioClip(Sound sound)
+        public static void PlayGameSound(GameSound gameSound, Vector3 position)
         {
-            foreach (GameAssets.SoundAudioClip soundAudioClip in GameAssets.i.SoundAudioClips)
+            GameObject soundGameObject = new GameObject("Sound");
+            soundGameObject.transform.position = position;
+            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            audioSource.volume = _gameMusicVolume;
+            audioSource.clip = GetGameAudioClip(gameSound);
+            audioSource.Play();
+        }
+
+        public static void PlayGameSound(GameSound gameSound, float delay, Vector3 position)
+        {
+            GameObject soundGameObject = new GameObject("Sound");
+            soundGameObject.transform.position = position;
+            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            audioSource.volume = _gameMusicVolume;
+            audioSource.clip = GetGameAudioClip(gameSound);
+            audioSource.PlayDelayed(delay);
+        }
+
+        public static void PlayGameSound(GameSound gameSound, bool inLoop)
+        {
+            GameObject soundGameObject = new GameObject("Sound");
+            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            audioSource.volume = _gameMusicVolume;
+            audioSource.loop = inLoop;
+            audioSource.PlayOneShot(GetGameAudioClip(gameSound));
+        }
+        
+        public static float GameMusicVolume {
+            get { return _gameMusicVolume; }
+            set {
+                _gameMusicVolume = value;
+                if (OnGameMusicVolumeChanged != null) {
+                    OnGameMusicVolumeChanged(_gameMusicVolume);
+                }
+            }
+        }
+        private static AudioClip GetGameAudioClip(GameSound gameSound)
+        {
+            foreach (GameSoundController.SoundAudioClip soundAudioClip in GameSoundController.i.soundAudioClips)
             {
-                if (soundAudioClip.sound == sound)
+                if (soundAudioClip.GameSound == gameSound)
                 {
                     return soundAudioClip.AudioClip;
                 }
             }
-            Debug.LogError("Sound "+ sound+ " not found! ");
+            Debug.LogError("Sound "+ gameSound+ " not found! ");
             return null;
+        }
+        
+        
+        public static void PlayCharacterSound(CharacterSound characterSound)
+        {
+            GameObject soundGameObject = new GameObject("Sound");
+            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            audioSource.volume = _characterEffectsVolume;
+            audioSource.clip = GetCharacterAudioClip(characterSound);
+            audioSource.Play();
+        }
+        public static void PlayCharacterSound(CharacterSound characterSound, Vector3 position)
+        {
+            GameObject soundGameObject = new GameObject("Sound");
+            soundGameObject.transform.position = position;
+            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            audioSource.volume = _characterEffectsVolume;
+            audioSource.clip = GetCharacterAudioClip(characterSound);
+            audioSource.Play();
+        }
+
+        public static void PlayCharacterSound(CharacterSound characterSound, float delay, Vector3 position)
+        {
+            GameObject soundGameObject = new GameObject("Sound");
+            soundGameObject.transform.position = position;
+            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            audioSource.volume =_characterEffectsVolume;
+            audioSource.clip = GetCharacterAudioClip(characterSound);
+            audioSource.PlayDelayed(delay);
+        }
+
+        public static void PlayCharacterSound(CharacterSound characterSound, bool inLoop)
+        {
+            GameObject soundGameObject = new GameObject("Sound");
+            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            audioSource.volume = _characterEffectsVolume;
+            audioSource.loop = inLoop;
+            audioSource.PlayOneShot(GetCharacterAudioClip(characterSound));
+        }
+        
+
+        private static AudioClip GetCharacterAudioClip(CharacterSound characterSound)
+        {
+            foreach (CharacterSoundController.SoundAudioClip soundAudioClip in CharacterSoundController.i.soundAudioClips)
+            {
+                if (soundAudioClip.CharacterSound == characterSound)
+                {
+                    return soundAudioClip.AudioClip;
+                }
+            }
+            Debug.LogError("Sound "+ characterSound+ " not found! ");
+            return null;
+        }
+        
+        public static float CharacterEffectsVolume {
+            get => _characterEffectsVolume;
+            set {
+                _characterEffectsVolume = value;
+                if (OnCharacterEffectsVolumeChanged != null) {
+                    OnCharacterEffectsVolumeChanged(_characterEffectsVolume);
+                }
+            }
         }
     }
 }
