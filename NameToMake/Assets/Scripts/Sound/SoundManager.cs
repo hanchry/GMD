@@ -80,11 +80,11 @@ namespace Sound
         }
         private static AudioClip GetGameAudioClip(GameSound gameSound)
         {
-            foreach (GameSoundController.SoundAudioClip soundAudioClip in GameSoundController.i.soundAudioClips)
+            foreach (GameSoundController.SoundAudioClip soundAudioClip in GameSoundController.I.soundAudioClips)
             {
-                if (soundAudioClip.GameSound == gameSound)
+                if (soundAudioClip.gameSound == gameSound)
                 {
-                    return soundAudioClip.AudioClip;
+                    return soundAudioClip.audioClip;
                 }
             }
             Debug.LogError("Sound "+ gameSound+ " not found! ");
@@ -132,11 +132,11 @@ namespace Sound
 
         private static AudioClip GetCharacterAudioClip(CharacterSound characterSound)
         {
-            foreach (CharacterSoundController.SoundAudioClip soundAudioClip in CharacterSoundController.i.soundAudioClips)
+            foreach (CharacterSoundController.SoundAudioClip soundAudioClip in CharacterSoundController.I.soundAudioClips)
             {
-                if (soundAudioClip.CharacterSound == characterSound)
+                if (soundAudioClip.characterSound == characterSound)
                 {
-                    return soundAudioClip.AudioClip;
+                    return soundAudioClip.audioClip;
                 }
             }
             Debug.LogError("Sound "+ characterSound+ " not found! ");

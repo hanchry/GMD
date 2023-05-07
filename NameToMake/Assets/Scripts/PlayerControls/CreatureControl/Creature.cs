@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
-using System.Threading.Tasks;
 using Objects;
-using PlayerControls.PlayerControl;
 using Sound;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace PlayerControls.CreatureControl
@@ -12,45 +11,44 @@ namespace PlayerControls.CreatureControl
     public class Creature :MonoBehaviour
     {
         
-        [SerializeField]
-        private AtributesSkills _atributesSkills;
+        [FormerlySerializedAs("_atributesSkills")] [SerializeField]
+        private AtributesSkills atributesSkills;
         private HealthSystem _healthSystem;
-        [SerializeField]
-        private HealthCanvas _healthCanvas;
-        [SerializeField]
-        private Slider _slider;
-        public Animator Animator;
+        [FormerlySerializedAs("_healthCanvas")] [SerializeField]
+        private HealthCanvas healthCanvas;
+        [FormerlySerializedAs("_slider")] [SerializeField]
+        private Slider slider;
+        [FormerlySerializedAs("Animator")] public Animator animator;
 
-        private GameObject _player;
+        private AtributesSkills _atributesSkills;
+        
+       
         private static readonly int Die = Animator.StringToHash("die");
         private static readonly int Damage = Animator.StringToHash("damage");
         
-        
         private void Start()
         {
-            _player = GameObject.FindGameObjectWithTag("Player");
-            
-            // get from ui
-            _healthSystem = new HealthSystem(100);
-            _healthCanvas.Setup(_healthSystem,_slider);
+            _atributesSkills =  transform.GetComponent<AtributesSkills>();
+            _healthSystem = new HealthSystem( Convert.ToInt32(_atributesSkills.Hp));
+            healthCanvas.Setup(_healthSystem,slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
         }
 
-        private  void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)
+        private  void HealthSystem_OnHealthChanged(object sender, EventArgs e)
         {
              float healthValue = _healthSystem.GetHealthPercent();
              
              if (healthValue <= 0)
-             { 
-                 _atributesSkills.IncreaseXp(5);
-                 Animator.SetTrigger(Die);
+             {  
+                 atributesSkills.IncreaseXp(5);
+                 animator.SetTrigger(Die);
                  GetComponent<Collider>().enabled = false;
                  SoundManager.PlayCharacterSound(SoundManager.CharacterSound.CreatureDying, transform.position);
                  StartCoroutine(DeathCreature());
              }
              else
              {
-                 Animator.SetTrigger(Damage);
+                 animator.SetTrigger(Damage);
              }
         }
         IEnumerator DeathCreature()
@@ -59,9 +57,9 @@ namespace PlayerControls.CreatureControl
             Destroy(this.gameObject);
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(Damage damage)
         {
-            this._healthSystem.Damage(damage);
+            _healthSystem.Damage(damage.Value);
         }
         public void StartDealDamage()
         {

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -916,7 +916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cddf4c3e45348c3a8366ea6bf9f448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _combatValues: {fileID: 153492388}
+  combatValues: {fileID: 153492388}
   radius: 0
   maxDistance: 0
 --- !u!114 &153492387
@@ -945,6 +945,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _atributesSkills: {fileID: 153492387}
+--- !u!1 &154782305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 154782306}
+  m_Layer: 0
+  m_Name: BattleHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &154782306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154782305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -151.61711, y: 24.912731, z: 532.2482}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &157594497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2289,7 +2320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955dc6784e3df48489b4d9d78d210f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slider: {fileID: 1880075564}
+  slider: {fileID: 1880075564}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2995,7 +3026,7 @@ NavMeshAgent:
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 1200
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3079,6 +3110,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   playerInput: {fileID: 0}
   navMeshAgent: {fileID: 1043489736}
+  isAlive: 0
 --- !u!4 &1043489741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd7c15f4e47d24e24a978c2bd706c016, type: 3}
@@ -3226,7 +3258,7 @@ NavMeshAgent:
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 80
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3246,15 +3278,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5d0811a5bf494888c3696ad03c03ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _atributesSkills: {fileID: 1043489744}
-  _healthCanvas: {fileID: 809410590}
-  _slider: {fileID: 1880075564}
-  Animator: {fileID: 1208400179}
+  atributesSkills: {fileID: 1043489744}
+  healthCanvas: {fileID: 809410590}
+  slider: {fileID: 1880075564}
+  animator: {fileID: 1208400179}
 --- !u!4 &1208400184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 39236bf8085cd4e0facd272487f2b765, type: 3}
   m_PrefabInstance: {fileID: 1734812094}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1208400185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208400178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf92851bfbe28e45bd5dc86d7a9163b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _npc: {fileID: 11400000, guid: f79fe8b39bedc410eafb84543a6c687c, type: 2}
 --- !u!4 &1223013551 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6502182839619065283, guid: 39236bf8085cd4e0facd272487f2b765, type: 3}
@@ -3808,7 +3853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955dc6784e3df48489b4d9d78d210f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slider: {fileID: 617048689}
+  slider: {fileID: 617048689}
 --- !u!1 &1564880449
 GameObject:
   m_ObjectHideFlags: 0
@@ -3855,7 +3900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cddf4c3e45348c3a8366ea6bf9f448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _combatValues: {fileID: 1564880453}
+  combatValues: {fileID: 1564880453}
   radius: 0
   maxDistance: 0
 --- !u!114 &1564880452
@@ -4792,6 +4837,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39236bf8085cd4e0facd272487f2b765, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1208400183}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39236bf8085cd4e0facd272487f2b765, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1208400185}
   m_SourcePrefab: {fileID: 100100000, guid: 39236bf8085cd4e0facd272487f2b765, type: 3}
 --- !u!1 &1844544759
 GameObject:

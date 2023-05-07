@@ -89,9 +89,9 @@ namespace PlayerControls.PlayerControl
            }
        }
 
-       public void TakeDamage(int damage)
+       public void TakeDamage(Damage damage)
        {
-           _healthSystem.Damage(damage);
+           _healthSystem.Damage(damage.Value);
        }
        
        private  void HealthSystem_OnHealthChanged(object sender, EventArgs e)
@@ -118,15 +118,29 @@ namespace PlayerControls.PlayerControl
            yield return new WaitForSeconds(5);
            Destroy(this.gameObject);
        }
-       
+
+       private void OnDestroy()
+       {
+           // If the object is destroyed, respawn it
+           // if (spawnedObject != null)
+           // {
+           //     SpawnObject();
+           // }
+       }
+       private void SpawnPlayer()
+       {
+           // Create a new instance of the object at the specified position and rotation
+          // spawnedObject = Instantiate(gameObject, respawnPosition, respawnRotation);
+       }
+
        public void Update()
        { 
-           MovementSm.currentState.HandleInput(); 
-           MovementSm.currentState.LogicUpdate();
+           MovementSm.CurrentState.HandleInput(); 
+           MovementSm.CurrentState.LogicUpdate();
        }
        public void FixedUpdate()
        {
-           MovementSm.currentState.PhysicsUpdate();
+           MovementSm.CurrentState.PhysicsUpdate();
        }
        
     }

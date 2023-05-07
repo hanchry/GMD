@@ -19,11 +19,10 @@ public class CombatValues : MonoBehaviour
         
         int critical = Critic() ? 2 : 1;
         damage.Value *= critical;
-        
-        
+
         return damage;
     }
-
+    
     public Damage DamageReceived(Damage damage)
     {
 
@@ -45,9 +44,7 @@ public class CombatValues : MonoBehaviour
         // Debug.Log(Items.Instance.Weapon1);
         
     }
-
-
-
+    
     private Damage BaseDamage(Damage damage,String weaponName)
     {
         if (weaponName != "")

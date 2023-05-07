@@ -2,35 +2,34 @@ using PlayerControls.PlayerControl;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace PlayerControls.CreatureControl
+namespace PlayerControls.CreatureControl.StateManagement
 {
     public class ChaseState : StateMachineBehaviour
     {
-        private NavMeshAgent agent;
-
-        private GameObject player;
-        private Player playerScriptComponent;
+        private NavMeshAgent _agent;
+        
+        private GameObject _player;
+        private Player _playerScriptComponent;
     
         private static readonly int IsChasing = Animator.StringToHash("IsChasing");
-    
         private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
         
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            agent = animator.GetComponent<NavMeshAgent>();
-            player = GameObject.FindGameObjectWithTag("Player");
-            playerScriptComponent = player.GetComponent<Player>();
-            agent.speed = 3.5f;
+            _agent = animator.GetComponent<NavMeshAgent>();
+            _player = GameObject.FindGameObjectWithTag("Player");
+            _playerScriptComponent = _player.GetComponent<Player>();
+            _agent.speed = 3.5f;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (playerScriptComponent.isAlive)
+            if (_playerScriptComponent.isAlive)
             {
-                var position = player.transform.position;
-                agent.SetDestination(position);
+                var position = _player.transform.position;
+                _agent.SetDestination(position);
                 float distance = Vector3.Distance(position, animator.transform.position);
                 if (distance > 13)
                 {
@@ -47,19 +46,8 @@ namespace PlayerControls.CreatureControl
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            agent.SetDestination(animator.transform.position);
+            _agent.SetDestination(animator.transform.position);
         }
-
-        // OnStateMove is called right after Animator.OnAnimatorMove()
-        //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    // Implement code that processes and affects root motion
-        //}
-
-        // OnStateIK is called right after Animator.OnAnimatorIK()
-        //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    // Implement code that sets up animation IK (inverse kinematics)
-        //}
+        
     }
 }

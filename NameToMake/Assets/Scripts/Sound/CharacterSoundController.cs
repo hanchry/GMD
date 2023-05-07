@@ -7,7 +7,7 @@ namespace Sound
     {
         private static CharacterSoundController _i;
 
-        public static CharacterSoundController i
+        public static CharacterSoundController I
         {
             get
             {
@@ -25,8 +25,11 @@ namespace Sound
         [System.Serializable]
         public class SoundAudioClip
         {
-            public SoundManager.CharacterSound CharacterSound;
-            public AudioClip AudioClip;
+            [FormerlySerializedAs("CharacterSound")] 
+            public SoundManager.CharacterSound characterSound;
+          
+            [FormerlySerializedAs("AudioClip")] 
+            public AudioClip audioClip;
         
         }
     }

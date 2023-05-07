@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace PlayerControls.CreatureControl
+namespace PlayerControls.CreatureControl.StateManagement
 {
     public class IdleState : StateMachineBehaviour
     {
-        private float timer;
-        private Transform player;
+        private float _timer;
+        private Transform _player;
 
-        private float chaseRange = 8;
+        private const float ChaseRange = 8;
         private static readonly int IsPatrolling = Animator.StringToHash("IsPatrolling");
         private static readonly int IsChasing = Animator.StringToHash("IsChasing");
 
@@ -15,21 +15,21 @@ namespace PlayerControls.CreatureControl
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            timer = 0;
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            _timer = 0;
+            _player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            timer += Time.deltaTime;
-            if (timer > 5)
+            _timer += Time.deltaTime;
+            if (_timer > 5)
             {
                 animator.SetBool(IsPatrolling,true);
             }
 
-            float distance = Vector3.Distance(player.position, animator.transform.position);
-            if (distance < chaseRange)
+            float distance = Vector3.Distance(_player.position, animator.transform.position);
+            if (distance < ChaseRange)
             {
                 animator.SetBool(IsChasing,true);
             }

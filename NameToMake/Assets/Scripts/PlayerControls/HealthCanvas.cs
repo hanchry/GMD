@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace PlayerControls
@@ -7,18 +8,18 @@ namespace PlayerControls
     {
         [SerializeField]
         private HealthSystem _healthSystem;
-        [SerializeField]
-        private Slider _slider;
+        [FormerlySerializedAs("_slider")] [SerializeField]
+        private Slider slider;
         public void Setup(HealthSystem healthSystem, Slider slider)
         {
             _healthSystem = healthSystem;
-            _slider = slider;
+            this.slider = slider;
             healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
         }
 
         private void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)
         {
-            _slider.value = _healthSystem.GetHealthPercent();
+            slider.value = _healthSystem.GetHealthPercent();
         }
         // Update is called once per frame
         void LateUpdate()

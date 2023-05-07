@@ -1,62 +1,62 @@
 using System.Collections.Generic;
-using Sound;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace PlayerControls.CreatureControl
+namespace PlayerControls.CreatureControl.StateManagement
 {
     public class PatrolState : StateMachineBehaviour
     {   
-        private float timer;
-        private Transform player;
+        private float _timer;
+        private Transform _player;
 
-        private List<Transform> waypoints = new List<Transform>();
-    
-        private float chaseRange = 13;
-    
+        private readonly List<Transform> _waypoints = new List<Transform>();
+
+        private const float ChaseRange = 13;
+
         private static readonly int IsPatrolling = Animator.StringToHash("IsPatrolling");
         private static readonly int IsChasing = Animator.StringToHash("IsChasing");
     
-        private NavMeshAgent agent;
+        private NavMeshAgent _agent;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            timer = 0;
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            _timer = 0;
+            _player = GameObject.FindGameObjectWithTag("Player").transform;
         
             // loop through all waypoints and change the destination of the enemy
-            agent = animator.GetComponent<NavMeshAgent>();
-            agent.speed = 1.5f;
+            _agent = animator.GetComponent<NavMeshAgent>();
+            _agent.speed = 1.5f;
             GameObject gameObject = GameObject.FindGameObjectWithTag("Waypoints");
             foreach (Transform transform in gameObject.transform)
             {
-                waypoints.Add(transform);
+                _waypoints.Add(transform);
             }
 
-            agent.SetDestination(waypoints[Random.Range(0, waypoints.Count)].position);
+            _agent.SetDestination(_waypoints[Random.Range(0, _waypoints.Count)].position);
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             // when reaching the destination give a new destination
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            if (_agent.remainingDistance <= _agent.stoppingDistance)
             {
-                agent.SetDestination(waypoints[Random.Range(0, waypoints.Count)].position);
+                _agent.SetDestination(_waypoints[Random.Range(0, _waypoints.Count)].position);
             }
             // on timer change the patrolling state
-            timer += Time.deltaTime;
-            if (timer > 10)
+            _timer += Time.deltaTime;
+            if (_timer > 10)
             {
                 animator.SetBool(IsPatrolling,false);
             }
         
         
-            float distance = Vector3.Distance(player.position, animator.transform.position);
-            if (distance < chaseRange)
+            float distance = Vector3.Distance(_player.position, animator.transform.position);
+            if (distance < ChaseRange)
             {
                 animator.SetBool(IsChasing,true);
+               
             }
         }
 
@@ -64,19 +64,8 @@ namespace PlayerControls.CreatureControl
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             // stop the enemy after exiting patrol state
-            agent.SetDestination(agent.transform.position);
+            _agent.SetDestination(_agent.transform.position);
         }
-
-        // OnStateMove is called right after Animator.OnAnimatorMove()
-        //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    // Implement code that processes and affects root motion
-        //}
-
-        // OnStateIK is called right after Animator.OnAnimatorIK()
-        //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    // Implement code that sets up animation IK (inverse kinematics)
-        //}
+        
     }
 }
