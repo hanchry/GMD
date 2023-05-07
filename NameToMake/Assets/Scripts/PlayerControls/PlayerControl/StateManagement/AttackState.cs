@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PlayerControls;
 using PlayerControls.PlayerControl;
 using PlayerControls.PlayerControl.StateManagement;
+using Sound;
 using UnityEngine;
 
 public class AttackState : State
@@ -27,7 +28,7 @@ public class AttackState : State
         base.Enter();
         attack = false;
         timePassed = 0f;
-        Player.Animator.SetTrigger(Attack);
+        Player.animator.SetTrigger(Attack);
     }
 
     public override void HandleInput()
@@ -44,18 +45,18 @@ public class AttackState : State
         base.LogicUpdate();
 
         timePassed += Time.deltaTime;
-        clipLength = Player.Animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
-        clipSpeed = Player.Animator.GetCurrentAnimatorStateInfo(1).speed;
+        clipLength = Player.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
+        clipSpeed = Player.animator.GetCurrentAnimatorStateInfo(1).speed;
 
         if (timePassed >= clipLength / clipSpeed && attack)
         {
-            StateMachine.ChangeState(Player.attacking);
+            StateMachine.ChangeState(Player.Attacking);
         }
         
         if (timePassed >= clipLength / clipSpeed)
         {
-            StateMachine.ChangeState(Player.combating);
-            Player.Animator.SetTrigger(Move);
+            StateMachine.ChangeState(Player.Combating);
+            Player.animator.SetTrigger(Move);
         }
     }
 

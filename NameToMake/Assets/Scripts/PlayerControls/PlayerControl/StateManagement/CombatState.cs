@@ -1,3 +1,4 @@
+using Sound;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -31,7 +32,7 @@ namespace PlayerControls.PlayerControl.StateManagement
             rotateSpeedMovement = Player.rotationDampTime;
             _transform = Player.transform;
             rotationSpeed = Player.rotationSpeed;
-            _navMeshAgent = Player.NavMeshAgent;
+            _navMeshAgent = Player.navMeshAgent;
             
             moveAction.performed += OnMovePerformed;
         }
@@ -55,17 +56,20 @@ namespace PlayerControls.PlayerControl.StateManagement
         {
             base.LogicUpdate();
 
-            float speed = Player.NavMeshAgent.velocity.magnitude/Player.NavMeshAgent.speed;
-            Player.Animator.SetFloat(Player.Speed, speed, Player.speedDampTime, Time.deltaTime);
+            float speed = Player.navMeshAgent.velocity.magnitude/Player.navMeshAgent.speed;
+            Player.animator.SetFloat(Player.Speed, speed, Player.speedDampTime, Time.deltaTime);
             if (sheathWeapon)
             {
-                Player.Animator.SetTrigger(SheathWeapon);
-                StateMachine.ChangeState(Player.standing);
+                Player.animator.SetTrigger(SheathWeapon);
+                StateMachine.ChangeState(Player.Standing);
+                SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerDrawSword,0.5f,Player.transform.position);
             }
             if (attack)
             {
-                Player.Animator.SetTrigger(Attack);
-                StateMachine.ChangeState(Player.attacking);
+                Player.animator.SetTrigger(Attack);
+                StateMachine.ChangeState(Player.Attacking);
+                SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerSwordSlash,0.5f,Player.transform.position);
+                
             }
         }
         public void OnMovePerformed(InputAction.CallbackContext context)
@@ -79,7 +83,6 @@ namespace PlayerControls.PlayerControl.StateManagement
                     _navMeshAgent.stoppingDistance = 0;
                     UnityEngine.Quaternion rotationToLookAt = UnityEngine.Quaternion.LookRotation(hit.point - _transform.position);
                     float rotationY = Mathf.SmoothDampAngle(_transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref rotationSpeed, rotateSpeedMovement* (Time.deltaTime*5));
-        
                     _transform.eulerAngles = new UnityEngine.Vector3(0, rotationY, 0);
                 }
             }
