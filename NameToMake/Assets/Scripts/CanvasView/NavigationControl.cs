@@ -32,6 +32,10 @@ public class NavigationControl : MonoBehaviour
             SceneManager.LoadScene("AttributesSkills");
         }
     }
+    public void OnMenuClick()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 
     
     void Start()
