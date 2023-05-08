@@ -2669,7 +2669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5d0811a5bf494888c3696ad03c03ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atributesSkills: {fileID: 0}
+  atributesSkills: {fileID: 1208400185}
   healthCanvas: {fileID: 809410590}
   slider: {fileID: 1880075564}
   animator: {fileID: 1208400179}

@@ -30,7 +30,9 @@ namespace PlayerControls.PlayerControl
         private void OnObjectDestroyed(GameObject destroyedObject)
         {
             if (_spawnedObject != null)
-            {
+            { GameObject deathUi2 = GameObject.Find("DeadPopUp(Clone)");
+                if(deathUi2 != null)
+                    Destroy(deathUi2);
                 Invoke(nameof(SpawnObject), 1f);
             }
         }

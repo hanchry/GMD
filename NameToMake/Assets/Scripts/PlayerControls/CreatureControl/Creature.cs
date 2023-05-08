@@ -40,7 +40,7 @@ namespace PlayerControls.CreatureControl
              
              if (healthValue <= 0)
              {  
-                 atributesSkills.IncreaseXp(5);
+                 atributesSkills.IncreaseXp(10);
                  animator.SetTrigger(Die);
                  GetComponent<Collider>().enabled = false;
                  SoundManager.PlayCharacterSound(SoundManager.CharacterSound.CreatureDying, transform.position);

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Creature1
   type: 0
-  constitution: 10
+  constitution: 2
   strength: 2
   dexterity: 2
-  luck: 0
+  luck: 1

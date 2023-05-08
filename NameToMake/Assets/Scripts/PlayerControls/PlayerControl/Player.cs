@@ -115,6 +115,10 @@ namespace PlayerControls.PlayerControl
        IEnumerator DeathPlayer()
        { 
            var player = this.gameObject;
+           GameObject canvas = GameObject.Find("Canvas");
+           GameObject deathUi = 
+               Instantiate(Resources.Load("Prefabs/UI/DeadPopUp"), 
+                   canvas.transform, false) as GameObject;
            yield return new WaitForSeconds(5);
            if (OnObjectDestroyed != null)
            {
@@ -132,15 +136,6 @@ namespace PlayerControls.PlayerControl
        {
            OnObjectDestroyed -= action;
        }
-       
-       // private void SpawnPlayer()
-       // {
-       //    Vector3 spawnPosition =  new Vector3(-176.160004f, 0.330000013f, 648.02002f);
-       //    Vector3 spawnRotationVector =  new Vector3(0f,143.38797f,0f);
-       //    Quaternion spawnRotation =  Quaternion.LookRotation(spawnRotationVector);
-       //     // Create a new instance of the object at the specified position and rotation
-       //     spawnedObject = Instantiate(objectToRespawn, spawnPosition, spawnRotation);
-       // }
 
        public void Update()
        { 

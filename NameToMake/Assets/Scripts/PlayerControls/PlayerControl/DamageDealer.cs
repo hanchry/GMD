@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Model;
 using Objects;
 using PlayerControls.CreatureControl;
 using Sound;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.Serialization;
 
 namespace PlayerControls.PlayerControl
@@ -25,6 +27,7 @@ namespace PlayerControls.PlayerControl
             // Will be changed when 
             // will be taken from Andrej's ui/ or add a listener to those values
             _damageGiven = combatValues.DamageGiven();
+      
         }
 
         // Update is called once per frame
