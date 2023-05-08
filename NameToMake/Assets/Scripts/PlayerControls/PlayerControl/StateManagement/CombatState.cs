@@ -1,3 +1,4 @@
+using PlayerControls.CreatureControl;
 using Sound;
 using UnityEngine;
 using UnityEngine.AI;
@@ -66,8 +67,8 @@ namespace PlayerControls.PlayerControl.StateManagement
             }
             if (_attack)
             {
+                TargetEnemyAndAttack();
                 Player.animator.SetTrigger(Attack);
-              //  RotatePlayer();
                 StateMachine.ChangeState(Player.Attacking);
                 SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerSwordSlash,0.5f,Player.transform.position);
                 
@@ -90,7 +91,20 @@ namespace PlayerControls.PlayerControl.StateManagement
         }
         public void TargetEnemyAndAttack()
         {
-           
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+            {
+                if (hit.collider.GetComponent<Creature>())
+                {
+                    var position = hit.transform.position;
+                    _navMeshAgent.SetDestination(position);
+                    _navMeshAgent.stoppingDistance = 2;
+                    UnityEngine.Quaternion rotationToLookAt = UnityEngine.Quaternion.LookRotation(position - _transform.position);
+                    float rotationY = Mathf.SmoothDampAngle(_transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref _rotationSpeed, _rotateSpeedMovement* (Time.deltaTime*5));
+                    _transform.eulerAngles = new UnityEngine.Vector3(0, rotationY, 0);
+                }
+            }
+            
         }
     }
 }
