@@ -70,8 +70,7 @@ namespace PlayerControls.PlayerControl.StateManagement
                 {
                     _navMeshAgent.SetDestination(hit.point);
                     _navMeshAgent.stoppingDistance = 0;
-                    
-                     Quaternion rotationToLookAt = Quaternion.LookRotation(hit.point - _transform.position);
+                    Quaternion rotationToLookAt = Quaternion.LookRotation(hit.point - _transform.position);
                     float rotationY = Mathf.SmoothDampAngle(_transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref _rotateVelocity, _rotateSpeedMovement* (Time.deltaTime*5));
         
                 //    _transform.eulerAngles = new UnityEngine.Vector3(0, rotationY, 0);

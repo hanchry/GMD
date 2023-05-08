@@ -1,22 +1,24 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CameraControls
 {
     public class ZoomController : MonoBehaviour
     {
     
-        public CinemachineVirtualCamera _virtualCamera;
+        [FormerlySerializedAs("_virtualCamera")] 
+        public CinemachineVirtualCamera virtualCamera;
 
-        private float followOffsetMin = 20f;
-        private float followOffsetMax = 60f;
-        private Vector3 followOffset;
+        private const float FollowOffsetMin = 20f;
+        private const float FollowOffsetMax = 60f;
+        private Vector3 _followOffset;
         
         public static ZoomController Instance { get; private set; }
 
         private void Awake()
         {
-            followOffset = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset;
+            _followOffset = virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset;
             if (Instance == null)
             {
                 Instance = this;
@@ -36,32 +38,32 @@ namespace CameraControls
         
         private void HandleCameraZoom_MoveCamera()
         {
-            Vector3 zoomDir = followOffset.normalized;
+            Vector3 zoomDir = _followOffset.normalized;
             float zoomAmount = 2f; 
             if (Input.mouseScrollDelta.y > 0)
             {
-                followOffset += zoomDir* zoomAmount;
+                _followOffset += zoomDir* zoomAmount;
             }
             if (Input.mouseScrollDelta.y < 0)
             {
-                followOffset -= zoomDir* zoomAmount;
+                _followOffset -= zoomDir* zoomAmount;
             }
 
-            if (followOffset.magnitude < followOffsetMin)
+            if (_followOffset.magnitude < FollowOffsetMin)
             {
-                followOffset = zoomDir * followOffsetMin;
+                _followOffset = zoomDir * FollowOffsetMin;
             }
-            if (followOffset.magnitude > followOffsetMax)
+            if (_followOffset.magnitude > FollowOffsetMax)
             {
-                followOffset = zoomDir * followOffsetMax;
+                _followOffset = zoomDir * FollowOffsetMax;
             }
 
             float zoomSpeed = 10f;
-            _virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = 
-                Vector3.Lerp(_virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset,
-                    followOffset, Time.deltaTime * zoomSpeed);
+            virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = 
+                Vector3.Lerp(virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset,
+                    _followOffset, Time.deltaTime * zoomSpeed);
 
-            _virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = followOffset;
+            virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = _followOffset;
         }
     
     }
