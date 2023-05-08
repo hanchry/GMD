@@ -1,6 +1,6 @@
 ## Authors: Andrej Jurco(304160) , Nicolae Cernean(304190)
 
-## Link to video: [](https://youtu.be/0Hmgnx_tBDQ)
+## Link to video: [Video](https://youtu.be/0Hmgnx_tBDQ)
 **Assets:**
 * [Trees](https://assetstore.unity.com/packages/3d/vegetation/trees/conifers-botd-142076)
 * [Ground Textures](https://assetstore.unity.com/packages/2d/textures-materials/floors/outdoor-ground-textures-12555)
