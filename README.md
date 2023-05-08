@@ -6,7 +6,7 @@
 * [Ground Textures](https://assetstore.unity.com/packages/2d/textures-materials/floors/outdoor-ground-textures-12555)
 * [Grass](https://assetstore.unity.com/packages/2d/textures-materials/nature/grass-flowers-pack-free-138810)
 * [Character Prefabs](https://www.mixamo.com/)
-* [Weapons](https://assetstore.unity.com/packages/3d/props/weapons/free-pack-of-medieval-weapons-136607)
+* [Weapons](https://assetstore.unity.com/packages/3d/props/weapons/free-pack-of-medieval-weapons-136607) </br>
 **Tutorials:**
 * [Drag and Drop](https://youtu.be/kWRyZ3hb1Vc)
 * [Finite State Management](https://www.youtube.com/watch?v=HK2gEE1ugZk)
