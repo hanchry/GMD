@@ -26,6 +26,8 @@ public class MenuControl : MonoBehaviour
    
     void Start()
     {
+        if(GameObject.Find("Sound") != null)
+            Destroy(GameObject.Find("Sound"));
         BeginningAnimation();
         Animation();
         SoundManager.PlayGameSound(SoundManager.GameSound.GameRegisteringSoundtrack,true);
