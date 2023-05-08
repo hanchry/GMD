@@ -66,9 +66,6 @@ namespace CameraControls
 
                 }
             }
-        
-        
-      
         }
     }
 }
