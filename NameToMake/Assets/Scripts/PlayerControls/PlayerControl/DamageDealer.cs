@@ -2,45 +2,47 @@ using System.Collections.Generic;
 using Objects;
 using PlayerControls.CreatureControl;
 using Sound;
-using Unity.Properties;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PlayerControls.PlayerControl
 {
     public class DamageDealer : MonoBehaviour
     {
-        private bool canDealDamage;
-
-        private List<GameObject> hasDealtDamage;
+        private bool _canDealDamage;
+        private Damage _damageGiven;
+        
+        private List<GameObject> _hasDealtDamage;
 
         [SerializeField] private float weaponLength;
-        [SerializeField] private int weaponDamage;
-        [SerializeField] private CombatValues _combatValues;
+        [FormerlySerializedAs("_combatValues")] 
+        [SerializeField] private CombatValues combatValues;
         void Start()
         {
-            canDealDamage = false;
-            hasDealtDamage = new List<GameObject>();
+            _canDealDamage = false;
+            _hasDealtDamage = new List<GameObject>();
             
             // Will be changed when 
             // will be taken from Andrej's ui/ or add a listener to those values
-            weaponDamage = _combatValues.DamageGiven().Value;
+            _damageGiven = combatValues.DamageGiven();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (canDealDamage)
+            if (_canDealDamage)
             {
                 RaycastHit hit;
                 int layerMask = 1 << 9;
                 if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, layerMask))
                 {
-                    if (hit.transform.TryGetComponent(out Creature creature) && !hasDealtDamage.Contains(hit.transform.gameObject))
+                    if (hit.transform.TryGetComponent(out Creature creature) && !_hasDealtDamage.Contains(hit.transform.gameObject))
                     { 
                         var position = creature.transform.position;
-                        creature.TakeDamage(weaponDamage);
+                        creature.TakeDamage(combatValues.DamageReceived(_damageGiven));
+                        
                         SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerSwordMetalHit, position);
-                        hasDealtDamage.Add(hit.transform.gameObject);
+                        _hasDealtDamage.Add(hit.transform.gameObject);
                         SoundManager.PlayCharacterSound(SoundManager.CharacterSound.CreatureDamage,position);
                     }
                 }
@@ -49,12 +51,12 @@ namespace PlayerControls.PlayerControl
 
         public void StartDealDamage()
         {
-            canDealDamage = true; 
-            hasDealtDamage.Clear();
+            _canDealDamage = true; 
+            _hasDealtDamage.Clear();
         }
         public void EndDealDamage()
         {
-            canDealDamage = true;
+            _canDealDamage = true;
         }
 
         private void OnDrawGizmos()
@@ -65,7 +67,8 @@ namespace PlayerControls.PlayerControl
             Gizmos.DrawLine(position, position - transform1.up * weaponLength);
             
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(transform.position, -transform.up);
+            var transform2 = transform;
+            Gizmos.DrawRay(transform2.position, -transform2.up);
         }
     }
 }

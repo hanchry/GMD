@@ -20,6 +20,8 @@ namespace PlayerControls.PlayerControl
         [FormerlySerializedAs("_atributesSkills")] [SerializeField]
         private AtributesSkills attributesSkills;
         
+        public static event Action<GameObject> OnObjectDestroyed;
+        
         [Header("Controls")] 
         public float playerSpeed = 5.0f;
         public float rotationSpeed;
@@ -53,12 +55,10 @@ namespace PlayerControls.PlayerControl
        private static readonly int Die = Animator.StringToHash("Die");
        private static readonly int Damage = Animator.StringToHash("Damage");
        public static readonly int Speed = Animator.StringToHash("Speed");
-       
-       
+
        private void Start()
        {
-           
-            animator = GetComponent<Animator>();
+           animator = GetComponent<Animator>();
             playerInput = GetComponent<PlayerInput>();
             navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -72,7 +72,6 @@ namespace PlayerControls.PlayerControl
             healthCanvas.Setup(_healthSystem,slider);
             _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
             isAlive = true;
-
        }
 
        private static Player Instance { get; set; }
@@ -89,9 +88,9 @@ namespace PlayerControls.PlayerControl
            }
        }
 
-       public void TakeDamage(int damage)
+       public void TakeDamage(Damage damage)
        {
-           _healthSystem.Damage(damage);
+           _healthSystem.Damage(damage.Value);
        }
        
        private  void HealthSystem_OnHealthChanged(object sender, EventArgs e)
@@ -114,19 +113,43 @@ namespace PlayerControls.PlayerControl
        }
        
        IEnumerator DeathPlayer()
-       {
+       { 
+           var player = this.gameObject;
            yield return new WaitForSeconds(5);
-           Destroy(this.gameObject);
+           if (OnObjectDestroyed != null)
+           {
+               OnObjectDestroyed(player);
+               Destroy(player);
+           }
+       }
+
+       public static void Subscribe(Action<GameObject> action)
+       {
+           OnObjectDestroyed += action;
+       }
+
+       public static void Unsubscribe(Action<GameObject> action)
+       {
+           OnObjectDestroyed -= action;
        }
        
+       // private void SpawnPlayer()
+       // {
+       //    Vector3 spawnPosition =  new Vector3(-176.160004f, 0.330000013f, 648.02002f);
+       //    Vector3 spawnRotationVector =  new Vector3(0f,143.38797f,0f);
+       //    Quaternion spawnRotation =  Quaternion.LookRotation(spawnRotationVector);
+       //     // Create a new instance of the object at the specified position and rotation
+       //     spawnedObject = Instantiate(objectToRespawn, spawnPosition, spawnRotation);
+       // }
+
        public void Update()
        { 
-           MovementSm.currentState.HandleInput(); 
-           MovementSm.currentState.LogicUpdate();
+           MovementSm.CurrentState.HandleInput(); 
+           MovementSm.CurrentState.LogicUpdate();
        }
        public void FixedUpdate()
        {
-           MovementSm.currentState.PhysicsUpdate();
+           MovementSm.CurrentState.PhysicsUpdate();
        }
        
     }

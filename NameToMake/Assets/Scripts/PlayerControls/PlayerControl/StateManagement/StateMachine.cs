@@ -2,18 +2,18 @@ namespace PlayerControls.PlayerControl.StateManagement
 {
     public class StateMachine
     {
-        public State currentState;
+        public State CurrentState;
 
         public void Initialize(State startingState)
         {
-            currentState = startingState;
+            CurrentState = startingState;
             startingState.Enter();
             
         }
         public void ChangeState(State newState)
         {
-            currentState.Exit();
-            currentState = newState;
+            CurrentState.Exit();
+            CurrentState = newState;
             newState.Enter();
         }
     }
