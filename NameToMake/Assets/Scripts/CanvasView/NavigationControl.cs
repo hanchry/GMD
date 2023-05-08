@@ -32,18 +32,18 @@ public class NavigationControl : MonoBehaviour
             SceneManager.LoadScene("AttributesSkills");
         }
     }
+    public void OnMenuClick()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         GameObject obj = GameObject.Find("PlayerName");
         obj.GetComponent<TextMeshProUGUI>().text = Characters.Instance.GetCurrentCharacterName();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    
 
     private string CurrentScene()
     {

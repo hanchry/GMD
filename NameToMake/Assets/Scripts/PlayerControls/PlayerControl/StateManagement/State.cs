@@ -8,25 +8,24 @@ namespace PlayerControls.PlayerControl.StateManagement
     {
         public Player Player;
         public StateMachine StateMachine;
-        protected Vector2 input;
 
-        public InputAction moveAction;
-        public InputAction drawWeaponAction;
-        public InputAction attackAction;
+        public readonly InputAction MoveAction;
+        public readonly InputAction DrawWeaponAction;
+        public readonly InputAction AttackAction;
 
-        public State(Player _player, StateMachine _stateMachine)
+        public State(Player player, StateMachine stateMachine)
         {
-            Player = _player;
-            StateMachine = _stateMachine;
+            Player = player;
+            StateMachine = stateMachine;
 
-            moveAction = _player.PlayerInput.actions["Move"];
-            drawWeaponAction= _player.PlayerInput.actions["DrawWeapon"];
-            attackAction = _player.PlayerInput.actions["Attack"];
+            MoveAction = player.playerInput.actions["Move"];
+            DrawWeaponAction= player.playerInput.actions["DrawWeapon"];
+            AttackAction = player.playerInput.actions["Attack"];
         }
 
         public virtual void Enter()
         {
-            Debug.Log("enter state: " + this.ToString());
+            // Debug.Log("enter state: " + this.ToString());
         }
         
         public virtual void HandleInput()

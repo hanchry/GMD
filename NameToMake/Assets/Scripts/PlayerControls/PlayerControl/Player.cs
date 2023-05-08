@@ -2,22 +2,25 @@ using System;
 using System.Collections;
 using Objects;
 using PlayerControls.PlayerControl.StateManagement;
+using Sound;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace PlayerControls.PlayerControl
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField]
-        private HealthCanvas _healthCanvas;
-        [SerializeField]
-        private Slider _slider;
-        [SerializeField]
-        private AtributesSkills _atributesSkills;
+        [FormerlySerializedAs("_healthCanvas")] [SerializeField]
+        private HealthCanvas healthCanvas;
+        [FormerlySerializedAs("_slider")] [SerializeField]
+        private Slider slider;
+        [FormerlySerializedAs("_atributesSkills")] [SerializeField]
+        private AtributesSkills attributesSkills;
+        
+        public static event Action<GameObject> OnObjectDestroyed;
         
         [Header("Controls")] 
         public float playerSpeed = 5.0f;
@@ -32,81 +35,116 @@ namespace PlayerControls.PlayerControl
         [Range(0, 1)]
         public float velocityDampTime = 0.9f;
         
-        public StateMachine movementSM;
-        public StandingState standing;
-        public CombatState combating;
-        public AttackState attacking;
+        public StateMachine MovementSm;
+        public StandingState Standing;
+        public CombatState Combating;
+        public AttackState Attacking;
 
 
-       [HideInInspector] 
-       public Animator Animator;
-       [HideInInspector] 
-       public PlayerInput PlayerInput;
+       [FormerlySerializedAs("Animator")] [HideInInspector] 
+       public Animator animator;
+       [FormerlySerializedAs("PlayerInput")] [HideInInspector] 
+       public PlayerInput playerInput;
        
        
-       public NavMeshAgent NavMeshAgent;
+       [FormerlySerializedAs("NavMeshAgent")] public NavMeshAgent navMeshAgent;
        
        private HealthSystem _healthSystem;
+       public bool isAlive;
 
        private static readonly int Die = Animator.StringToHash("Die");
        private static readonly int Damage = Animator.StringToHash("Damage");
        public static readonly int Speed = Animator.StringToHash("Speed");
-       
+
        private void Start()
        {
-           
-            Animator = GetComponent<Animator>();
-            PlayerInput = GetComponent<PlayerInput>();
-            NavMeshAgent = GetComponent<NavMeshAgent>();
+           animator = GetComponent<Animator>();
+            playerInput = GetComponent<PlayerInput>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
 
-            movementSM = new StateMachine(); 
-            standing = new StandingState(this, movementSM);
-            combating = new CombatState(this, movementSM);
-            attacking = new AttackState(this, movementSM);
-            movementSM.Initialize(standing);
-
-            // get from ui
-            _healthSystem = new HealthSystem(Convert.ToInt32(_atributesSkills.Hp));
-            _healthCanvas.Setup(_healthSystem,_slider);
-            _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
+            MovementSm = new StateMachine(); 
+            Standing = new StandingState(this, MovementSm);
+            Combating = new CombatState(this, MovementSm);
+            Attacking = new AttackState(this, MovementSm);
+            MovementSm.Initialize(Standing);
             
+            _healthSystem = new HealthSystem(Convert.ToInt32(attributesSkills.Hp));
+            healthCanvas.Setup(_healthSystem,slider);
+            _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
+            isAlive = true;
        }
 
-       public void TakeDamage(int damage)
+       private static Player Instance { get; set; }
+       private void Awake()
        {
-           this._healthSystem.Damage(damage);
+           if (Instance == null)
+           {
+               Instance = this;
+               DontDestroyOnLoad(gameObject);
+           }
+           else
+           {
+               Destroy(gameObject);
+           }
+       }
+
+       public void TakeDamage(Damage damage)
+       {
+           _healthSystem.Damage(damage.Value);
        }
        
-       private  void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)
+       private  void HealthSystem_OnHealthChanged(object sender, EventArgs e)
        {
            float healthValue = _healthSystem.GetHealthPercent();
              
            if (healthValue <= 0)
            {
-               Animator.SetTrigger(Die);
+               animator.SetTrigger(Die);
+               
                GetComponent<Collider>().enabled = false;
+               isAlive = false;
+               SoundManager.PlayCharacterSound(SoundManager.CharacterSound.PlayerDying, transform.position);
                StartCoroutine(DeathPlayer());
            }
            else
            {
-               Animator.SetTrigger(Damage);
+               animator.SetTrigger(Damage);
            }
        }
        
        IEnumerator DeathPlayer()
-       {
+       { 
+           var player = this.gameObject;
+           GameObject canvas = GameObject.Find("Canvas");
+           GameObject deathUi = 
+               Instantiate(Resources.Load("Prefabs/UI/DeadPopUp"), 
+                   canvas.transform, false) as GameObject;
            yield return new WaitForSeconds(5);
-           Destroy(this.gameObject);
+           if (OnObjectDestroyed != null)
+           {
+               OnObjectDestroyed(player);
+               Destroy(player);
+           }
        }
-       
+
+       public static void Subscribe(Action<GameObject> action)
+       {
+           OnObjectDestroyed += action;
+       }
+
+       public static void Unsubscribe(Action<GameObject> action)
+       {
+           OnObjectDestroyed -= action;
+       }
+
        public void Update()
        { 
-           movementSM.currentState.HandleInput(); 
-           movementSM.currentState.LogicUpdate();
+           MovementSm.CurrentState.HandleInput(); 
+           MovementSm.CurrentState.LogicUpdate();
        }
        public void FixedUpdate()
        {
-           movementSM.currentState.PhysicsUpdate();
+           MovementSm.CurrentState.PhysicsUpdate();
        }
        
     }

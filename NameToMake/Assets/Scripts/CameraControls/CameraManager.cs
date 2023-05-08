@@ -1,58 +1,74 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Cinemachine;
+using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+namespace CameraControls
 {
-    public CinemachineVirtualCamera cmVirtualCamera;
-    public Camera mainCamera;
-
-    private bool usingVirtualCam = true;
-
-    // Update is called once per frame
-    void Update()
+    public class CameraManager : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            usingVirtualCam = !usingVirtualCam;
+        public CinemachineVirtualCamera cmVirtualCamera;
+        public Camera mainCamera;
 
-            if (usingVirtualCam)
+        private bool _usingVirtualCam = true;
+        
+        private static CameraManager Instance { get; set; }
+
+        private void Awake()
+        {
+            if (Instance == null)
             {
-                cmVirtualCamera.gameObject.SetActive(true);
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
-                cmVirtualCamera.gameObject.SetActive(false);
+                Destroy(gameObject);
             }
         }
 
-        if (!usingVirtualCam)
+        // Update is called once per frame
+        void Update()
         {
-            float x = Input.mousePosition.x;
-            float y = Input.mousePosition.y;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _usingVirtualCam = !_usingVirtualCam;
 
-            if (x < 10)
-            {
-                mainCamera.transform.position -= Vector3.forward * (Time.deltaTime * 10);
-            }
-            else if (x > Screen.width - 10)
-            {
-                mainCamera.transform.position -= Vector3.back * (Time.deltaTime * 10);
+                if (_usingVirtualCam)
+                {
+                    cmVirtualCamera.gameObject.SetActive(true);
+                }
+                else
+                {
+                    cmVirtualCamera.gameObject.SetActive(false);
+                }
             }
 
-            if (y < 10)
+            if (!_usingVirtualCam)
             {
-                mainCamera.transform.position -= Vector3.left * (Time.deltaTime * 10);
-            }
-            else if(y > Screen.height - 10)
-            {
-                mainCamera.transform.position -= Vector3.right * (Time.deltaTime * 10);
+                float x = Input.mousePosition.x;
+                float y = Input.mousePosition.y;
 
+                if (x < 10)
+                {
+                    mainCamera.transform.position -= Vector3.forward * (Time.deltaTime * 10);
+                }
+                else if (x > Screen.width - 10)
+                {
+                    mainCamera.transform.position -= Vector3.back * (Time.deltaTime * 10);
+                }
+
+                if (y < 10)
+                {
+                    mainCamera.transform.position -= Vector3.left * (Time.deltaTime * 10);
+                }
+                else if(y > Screen.height - 10)
+                {
+                    mainCamera.transform.position -= Vector3.right * (Time.deltaTime * 10);
+
+                }
             }
-        }
         
         
       
+        }
     }
 }

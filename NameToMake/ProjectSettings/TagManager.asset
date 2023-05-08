@@ -10,6 +10,7 @@ TagManager:
   - Player2
   - Enemy
   - Waypoints
+  - InventorySlot
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Ground
   - Player
   - Enemy
-  - 
+  - UICamera
   - 
   - 
   - 

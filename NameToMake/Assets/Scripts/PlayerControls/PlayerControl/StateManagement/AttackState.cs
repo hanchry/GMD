@@ -1,67 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
-using PlayerControls;
-using PlayerControls.PlayerControl;
-using PlayerControls.PlayerControl.StateManagement;
 using UnityEngine;
 
-public class AttackState : State
+namespace PlayerControls.PlayerControl.StateManagement
 {
-    private float timePassed;
-    private float clipLength;
-    private float clipSpeed;
-    private bool attack;
-    private static readonly int Attack = Animator.StringToHash("Attack");
-    private static readonly int Speed = Animator.StringToHash("Speed");
-    private static readonly int Move = Animator.StringToHash("Move");
-
-    public AttackState(Player _player, StateMachine _stateMachine) : base(_player, _stateMachine)
+    public class AttackState : State
     {
-        Player = _player;
-        StateMachine = _stateMachine;
-    }
+        private float _timePassed;
+        private float _clipLength;
+        private float _clipSpeed;
+        private bool _attack;
+        private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Speed = Animator.StringToHash("Speed");
+        private static readonly int Move = Animator.StringToHash("Move");
 
-
-    public override void Enter()
-    {
-        base.Enter();
-        attack = false;
-        timePassed = 0f;
-        Player.Animator.SetTrigger(Attack);
-    }
-
-    public override void HandleInput()
-    {
-        base.HandleInput();
-
-        if (attackAction.triggered)
+        public AttackState(Player player, StateMachine stateMachine) : base(player, stateMachine)
         {
-            attack = true;
+            Player = player;
+            StateMachine = stateMachine;
         }
-    }
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
 
-        timePassed += Time.deltaTime;
-        clipLength = Player.Animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
-        clipSpeed = Player.Animator.GetCurrentAnimatorStateInfo(1).speed;
 
-        if (timePassed >= clipLength / clipSpeed && attack)
+        public override void Enter()
         {
-            StateMachine.ChangeState(Player.attacking);
+            base.Enter();
+            _attack = false;
+            _timePassed = 0f;
+            Player.animator.SetTrigger(Attack);
         }
+
+        public override void HandleInput()
+        {
+            base.HandleInput();
+
+            if (AttackAction.triggered)
+            {
+                _attack = true;
+            }
+        }
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+
+            _timePassed += Time.deltaTime;
+            _clipLength = Player.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
+            _clipSpeed = Player.animator.GetCurrentAnimatorStateInfo(1).speed;
+
+            if (_timePassed >= _clipLength / _clipSpeed && _attack)
+            {
+                StateMachine.ChangeState(Player.Attacking);
+                Player.animator.SetTrigger(Move);
+            }
         
-        if (timePassed >= clipLength / clipSpeed)
-        {
-            StateMachine.ChangeState(Player.combating);
-            Player.Animator.SetTrigger(Move);
+            if (_timePassed >= _clipLength / _clipSpeed)
+            {
+                StateMachine.ChangeState(Player.Combating);
+                Player.animator.SetTrigger(Move);
+            }
         }
     }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-    
 }

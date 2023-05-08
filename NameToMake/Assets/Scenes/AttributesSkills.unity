@@ -458,7 +458,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994302789}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &994302791
 Camera:
   m_ObjectHideFlags: 0
@@ -1073,6 +1073,22 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4288651167
       objectReference: {fileID: 0}
+    - target: {fileID: 697072361978984920, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 697072361978984920, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 697072361978984920, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 697072361978984920, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 1480688297861527872, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
       propertyPath: m_fontColor.b
       value: 1
@@ -1177,8 +1193,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6447014591106458226, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.62352943
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447014591106458226, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.62352943
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447014591106458226, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.62352943
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447014591106458226, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4288651167
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3668340916514207047, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
+    - {fileID: 1755379142963963017, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77b5b607f9b920f419e4ef2d3d6db6ed, type: 3}

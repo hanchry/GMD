@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,8 +26,12 @@ public class MenuControl : MonoBehaviour
    
     void Start()
     {
+        if(GameObject.Find("Sound") != null)
+            Destroy(GameObject.Find("Sound"));
         BeginningAnimation();
         Animation();
+        SoundManager.PlayGameSound(SoundManager.GameSound.GameRegisteringSoundtrack,true);
+        DontDestroyOnLoad(GameObject.Find("Sound"));
     }
     
     void Update()
